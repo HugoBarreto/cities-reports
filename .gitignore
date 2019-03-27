@@ -1,0 +1,20 @@
+### macOS
+*.DS_Store
+
+### PyCharm
+.idea/
+
+### Python
+__pycache__
+*.py[cod]
+*$py.class
+env/
+.ipynb_checkpoints
+
+### Project specifics
+v0.1/
+v0.2/
+./Archive/WeasyPrint/
+./Archive/pychromeless/
+2019-02-Floods-Sao-Paulo
+.keep
