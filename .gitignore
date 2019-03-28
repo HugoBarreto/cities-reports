@@ -14,7 +14,8 @@ env/
 ### Project specifics
 v0.1/
 v0.2/
-./Archive/WeasyPrint/
-./Archive/pychromeless/
+/weekly/Archive/WeasyPrint/
+/weekly/Archive/pychromeless/
 2019-02-Floods-Sao-Paulo
 .keep
+/weekly/data/output/
