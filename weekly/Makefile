@@ -18,3 +18,7 @@ update-css:
 upload-css: update-css
 	aws s3 cp ./notebooks/report/report.css s3://waze-reports/weekly/support_files/css/
 
+update-reports-config:
+	python update_reports_config.py
+	cp reports_config.json ./data/raw/
+	aws s3 cp reports_config.json s3://waze-reports/weekly/support_files/
