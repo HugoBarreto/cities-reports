@@ -100,7 +100,7 @@ html {
   line-height: 1.5; }
 
 body {
-  background: url(background-home.jpg) no-repeat center;
+  background: url(background-homepage.jpg) no-repeat center;
   background-size: cover;
   }
 
@@ -163,8 +163,10 @@ body {
       html body article#cover address:first-of-type {
         padding-left: 3cm; }
 
-
-
+/*
+    html body article.alert h2{
+        margin-bottom: 1cm;}
+*/
     html body article.alert table{
       width: 100%;
       text-align: center;
@@ -178,11 +180,22 @@ body {
           font-weight: bold;
         }
 
+      html body article.alert table tr.ok{
+        color: black;}
+
+      html body article.alert table tr.bad{
+        color: red;}
+
+      html body article.alert table tr.good{
+        color: green;}
+
       html body article.alert table td{
-        padding: 0px 2px 0px 2px;}
+        padding: 0px 2px 0px 2px;
+        color: inherit;}
 
       html body article.alert table td.street{
-        text-align: left;}
+        text-align: left;
+        color: inherit;}
 
       html body article.alert table tbody td{
           font-size: 12px;

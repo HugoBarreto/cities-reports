@@ -11,9 +11,16 @@
     <th>% TOTAL INTERACTIONS</th>
     <th>% TOTAL INTERACTIONS</th>
   </tr>
-  <tr>    
+      
     {% for idx, row in df.iterrows() %}
-    <tr>        
+        {% if row['variation'] >= 1 %}
+            <tr class="bad">
+        {% elif row['variation'] < -0.1 %}
+            <tr class="good">
+        {% else %}
+            <tr class="ok">
+        {% endif %}
+                
         {% set i = loop.index %}
         {% for colname in df.columns %}
             {% if row[colname] == "" %}
@@ -29,5 +36,5 @@
     </tr>
 
     {% endfor %}
-  </tr>
+  
 </table>
