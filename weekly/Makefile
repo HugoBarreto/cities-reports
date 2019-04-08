@@ -22,3 +22,7 @@ update-reports-config:
 	python update_reports_config.py
 	cp reports_config.json ./data/raw/
 	aws s3 cp reports_config.json s3://waze-reports/weekly/support_files/
+    
+update-test:
+	python update_reports_config.py -t
+	aws s3 cp rc_test.json s3://waze-reports/weekly/support_files/

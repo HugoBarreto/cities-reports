@@ -52,7 +52,3 @@ def lambda_handler(event, context):
         FunctionName='pngen',
         InvocationType='Event',
         Payload=json.dumps(event))
-    
-    
-    
-    

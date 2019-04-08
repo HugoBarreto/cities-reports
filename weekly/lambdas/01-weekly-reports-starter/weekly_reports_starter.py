@@ -27,8 +27,14 @@ def lambda_handler(event, context):
     today = dt.fromtimestamp(timestamp)
     
     bucket = 'waze-reports'
-    key = 'weekly/support_files/reports_config.json'
     
+    testing = event.get('test', False)
+    
+    if not testing:
+        key = 'weekly/support_files/reports_config.json'
+    else:        
+        key = 'weekly/support_files/rc_test.json' 
+        
     reports_config = get_reports_config(bucket, key)
     
     # ### Executando em outro dia da semana, simulando domingo
@@ -41,7 +47,10 @@ def lambda_handler(event, context):
     total_cities = 0
     for city in reports_config['cities']:
         city['bucket'] = bucket
-        city['prefix'] = f"weekly/data/city={city['city']}/year={today.year}/month={today.month}/day={today.day}/"
+        if not testing:
+            city['prefix'] = f"weekly/data/city={city['city']}/year={today.year}/month={today.month}/day={today.day}/"
+        else:
+            city['prefix'] = "test/report/"
         city['timestamp'] = timestamp
         total_cities += 1
     
