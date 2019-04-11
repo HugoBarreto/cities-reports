@@ -50,7 +50,7 @@ def city_dict(name: str, alerts_table: str, coord: list, zoom: float, email_titl
         'city' : name,
         'queries' : [
 
-                        {'query_name': 'JAM', 'params' : {'table': alerts_table, 'limit':''}, 
+                        {'query_name': 'JAM_ALERTS', 'params' : {'table': alerts_table, 'limit':''}, 
                          'bucket': 'waze-reports', 'key': 'weekly/support_files/queries/JAM_ALERTS.sql'},
             
                         {'query_name': 'ACCIDENTS', 'params' : {'table': alerts_table, 'limit':''}, 
@@ -90,7 +90,7 @@ def city_dict(name: str, alerts_table: str, coord: list, zoom: float, email_titl
                                             'tiles_list': ["CartoDB dark_matter", "CartoDB positron"],
                                             'zoom_control': False},
                             'table-img': {                           
-                                            'JAM' : 'JAM_HEATMAP',
+                                            'JAM_ALERTS' : 'JAM_HEATMAP',
                                             'ACCIDENTS': 'ACCIDENTS_HEATMAP', 
                                             'POT_HOLE': 'POT_HOLE_HEATMAP', 
                                             'TRAFFIC_LIGHT_FAULT': 'TRAFFIC_LIGHT_FAULT_HEATMAP', 
