@@ -19,20 +19,20 @@ email_html_pt = """<html><head></head><body>Prezado responsável,<br><br>Este é
 
 def fetch_cities(test: bool) -> list:
     cities = [
-                {'name': 'São Paulo', 'alerts_table': 'br_saopaulo_waze_alerts', 'coord': [-23.5333, -46.63333], 
-                 'zoom': 11.2, 'email_title': email_title_pt + 'São Paulo', 'email_html': email_html_pt},
+                {'name': 'São Paulo', 'bucket': 'waze-reports', 'database': 'cities', 'alerts_table': 'br_saopaulo_waze_alerts',
+                 'coord': [-23.5333, -46.63333], 'zoom': 11.2, 'email_title': email_title_pt + 'São Paulo', 'email_html': email_html_pt},
 
-                {'name': 'Xalapa', 'alerts_table': 'mx_xalapa_waze_alerts', 'coord': [19.5437, -96.91033], 
-                 'zoom': 13, 'email_title': email_title_es + 'Xalapa', 'email_html': email_html_es},
+                {'name': 'Xalapa', 'bucket': 'waze-reports', 'database': 'cities', 'alerts_table': 'mx_xalapa_waze_alerts',
+                 'coord': [19.5437, -96.91033], 'zoom': 13, 'email_title': email_title_es + 'Xalapa', 'email_html': email_html_es},
 
-                {'name': 'Quito', 'alerts_table': 'ec_quito_waze_alerts', 'coord': [-0.185219,  -78.5248],
-                 'zoom': 11.2, 'email_title': email_title_es + 'Quito', 'email_html': email_html_es},
+                {'name': 'Quito', 'bucket': 'waze-reports', 'database': 'cities', 'alerts_table': 'ec_quito_waze_alerts',
+                 'coord': [-0.185219,  -78.5248], 'zoom': 11.2, 'email_title': email_title_es + 'Quito', 'email_html': email_html_es},
 
-                {'name': 'Montevideo', 'alerts_table': 'uy_montevideo_waze_alerts', 'coord': [ -34.8485,  -56.1967],
-                 'zoom': 11.6, 'email_title': email_title_es + 'Montevideo', 'email_html': email_html_es},
+                {'name': 'Montevideo', 'bucket': 'waze-reports', 'database': 'cities', 'alerts_table': 'uy_montevideo_waze_alerts',
+                 'coord': [ -34.8485,  -56.1967], 'zoom': 11.6, 'email_title': email_title_es + 'Montevideo', 'email_html': email_html_es},
 
-                {'name': 'Miraflores', 'alerts_table': 'pe_lima_waze_alerts', 'coord': [-12.111062, -77.0315913],
-                 'zoom': 13, 'email_title': email_title_es + 'Miraflores', 'email_html': email_html_es},
+                {'name': 'Miraflores', 'bucket': 'waze-reports', 'database': 'cities', 'alerts_table': 'pe_lima_waze_alerts',
+                 'coord': [-12.1110, -77.03159], 'zoom': 13, 'email_title': email_title_es + 'Miraflores', 'email_html': email_html_es},
             ]
     if not test:
         # Return all cities
@@ -44,41 +44,42 @@ def fetch_cities(test: bool) -> list:
 ######################################################################################################################
 ############### Modify only if there are report's structural changes #################################################
 
-def city_dict(name: str, alerts_table: str, coord: list, zoom: float, email_title: str, email_html: str, test: bool) -> dict:
+def city_dict(name: str, bucket: str, database: str, alerts_table: str, coord: list, zoom: float, email_title: str, email_html: str, test: bool) -> dict:
 
     return{
         'city' : name,
         'queries' : [
 
-                        {'query_name': 'JAM_ALERTS', 'params' : {'table': alerts_table, 'limit':''}, 
-                         'bucket': 'waze-reports', 'key': 'weekly/support_files/queries/JAM_ALERTS.sql'},
-            
-                        {'query_name': 'ACCIDENTS', 'params' : {'table': alerts_table, 'limit':''}, 
-                         'bucket': 'waze-reports', 'key': 'weekly/support_files/queries/ACCIDENTS.sql'},
-            
-                        {'query_name': 'POT_HOLE', 'params' : {'table': alerts_table, 'limit':''}, 
-                         'bucket': 'waze-reports', 'key': 'weekly/support_files/queries/POT_HOLE.sql'},
-            
-                        {'query_name': 'TRAFFIC_LIGHT_FAULT', 'params' : {'table': alerts_table, 'limit':''}, 
-                         'bucket': 'waze-reports', 'key': 'weekly/support_files/queries/TRAFFIC_LIGHT_FAULT.sql'},
-            
-                        {'query_name': 'FLOOD', 'params' : {'table': alerts_table, 'limit':''}, 
-                         'bucket': 'waze-reports', 'key': 'weekly/support_files/queries/FLOOD.sql'},
-            
-                        {'query_name': 'JAM_HEATMAP', 'params' : {'table': alerts_table, 'limit':'LIMIT 20'}, 
-                         'bucket': 'waze-reports', 'key': 'weekly/support_files/queries/JAM_ALERTS_HEATMAP.sql'},
-            
-                        {'query_name': 'ACCIDENTS_HEATMAP', 'params' : {'table': alerts_table, 'limit':'LIMIT 20'}, 
-                         'bucket': 'waze-reports', 'key': 'weekly/support_files/queries/ACCIDENTS_HEATMAP.sql'},
-            
-                        {'query_name': 'POT_HOLE_HEATMAP', 'params' : {'table': alerts_table, 'limit':'LIMIT 20'}, 
-                         'bucket': 'waze-reports', 'key': 'weekly/support_files/queries/POT_HOLE_HEATMAP.sql'},
-            
-                        {'query_name': 'TRAFFIC_LIGHT_FAULT_HEATMAP', 'params' : {'table': alerts_table, 'limit':'LIMIT 20'}, 
-                         'bucket': 'waze-reports', 'key': 'weekly/support_files/queries/TRAFFIC_LIGHT_FAULT_HEATMAP.sql'},
-            
-                        {'query_name': 'FLOOD_HEATMAP', 'params' : {'table': alerts_table, 'limit':'LIMIT 20'}, 
-                         'bucket': 'waze-reports', 'key': 'weekly/support_files/queries/FLOOD_HEATMAP.sql'},
+                        {'query_name': 'JAM_ALERTS', 'database': database, 'table': alerts_table, 'params' : {'limit':''},
+                         'bucket': bucket, 'key': 'weekly/support_files/queries/JAM_ALERTS.sql'},
+
+                        {'query_name': 'ACCIDENTS', 'database': database, 'table': alerts_table, 'params' : {'limit':''},
+                         'bucket': bucket, 'key': 'weekly/support_files/queries/ACCIDENTS.sql'},
+
+                        {'query_name': 'POT_HOLE', 'database': database, 'table': alerts_table, 'params' : {'limit':''},
+                         'bucket': bucket, 'key': 'weekly/support_files/queries/POT_HOLE.sql'},
+
+                        {'query_name': 'TRAFFIC_LIGHT_FAULT', 'database': database, 'table': alerts_table, 'params' : {'limit':''},
+                         'bucket': bucket, 'key': 'weekly/support_files/queries/TRAFFIC_LIGHT_FAULT.sql'},
+
+                        {'query_name': 'FLOOD', 'database': database, 'table': alerts_table, 'params' : {'limit':''},
+                         'bucket': bucket, 'key': 'weekly/support_files/queries/FLOOD.sql'},
+
+                        {'query_name': 'JAM_HEATMAP', 'database': database, 'table': alerts_table, 'params' : {'limit':'LIMIT 20'},
+                         'bucket': bucket, 'key': 'weekly/support_files/queries/JAM_ALERTS_HEATMAP.sql'},
+
+                        {'query_name': 'ACCIDENTS_HEATMAP', 'database': database, 'table': alerts_table, 'params' : {'limit':'LIMIT 20'},
+                         'bucket': bucket, 'key': 'weekly/support_files/queries/ACCIDENTS_HEATMAP.sql'},
+
+                        {'query_name': 'POT_HOLE_HEATMAP', 'database': database, 'table': alerts_table, 'params' : {'limit':'LIMIT 20'},
+                         'bucket': bucket, 'key': 'weekly/support_files/queries/POT_HOLE_HEATMAP.sql'},
+
+                        {'query_name': 'TRAFFIC_LIGHT_FAULT_HEATMAP', 'database': database, 'table': alerts_table,
+                         'params' : {'limit':'LIMIT 20'}, 'bucket': bucket, 
+                         'key': 'weekly/support_files/queries/TRAFFIC_LIGHT_FAULT_HEATMAP.sql'},
+
+                        {'query_name': 'FLOOD_HEATMAP', 'database': database, 'table': alerts_table, 'params' : {'limit':'LIMIT 20'},
+                         'bucket': bucket, 'key': 'weekly/support_files/queries/FLOOD_HEATMAP.sql'},
                     ],
         
         'report' : {
@@ -96,15 +97,15 @@ def city_dict(name: str, alerts_table: str, coord: list, zoom: float, email_titl
                                             'TRAFFIC_LIGHT_FAULT': 'TRAFFIC_LIGHT_FAULT_HEATMAP', 
                                             'FLOOD': 'FLOOD_HEATMAP',
                                           },
-                            'cover': {'bucket': 'waze-reports', 'key': 'weekly/support_files/img/cover.png'},
+                            'cover': {'bucket': bucket, 'key': 'weekly/support_files/img/cover.png'},
                             },
             
                      'html':{
-                             'report_template': {'bucket': 'waze-reports', 'key': 'weekly/support_files/html/report.html'},
-                             'table_template': {'bucket': 'waze-reports', 'key': 'weekly/support_files/html/table_template.html'},
+                             'report_template': {'bucket': bucket, 'key': 'weekly/support_files/html/report.html'},
+                             'table_template': {'bucket': bucket, 'key': 'weekly/support_files/html/table_template.html'},
                             },
             
-                     'css': {'bucket': 'waze-reports', 'keys': ['weekly/support_files/css/report.css']},
+                     'css': {'bucket': bucket, 'keys': ['weekly/support_files/css/report.css']},
                     },
         
         'email' : {

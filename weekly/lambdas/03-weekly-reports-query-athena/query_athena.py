@@ -4,7 +4,6 @@ from datetime import datetime as dt
 from datetime import timedelta as td
 
 # athena constant
-DATABASE = 'cities'
 s3 = boto3.client('s3')
 athena = boto3.client('athena')
 
@@ -54,7 +53,7 @@ def get_query(event, today):
     payload = response['Body'].read().decode('utf-8')
 
     query = payload.format(city=event['city'], date_filters=date_filters(today), 
-                            table=event['task']['params']['table'], 
+                            table=event['task']['table'],
                             limit=event['task']['params']['limit'])
     
     return query
@@ -72,8 +71,9 @@ def lambda_handler(event, context):
 
     # created query
     query = get_query(event, today)
-
-    # athena client
+    
+    # DATABASE where the tables are
+    DATABASE = event['task']['database']
 
     # Execution
     response = athena.start_query_execution(
