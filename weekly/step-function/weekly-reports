@@ -1,0 +1,62 @@
+{
+  "Comment": "A Hello World example of the Amazon States Language using a Pass state",
+  "StartAt": "ObserveAthenaQueries",
+  "TimeoutSeconds": 600,
+  "States": {
+    "ObserveAthenaQueries": {
+      "Type": "Task",
+      "Resource": "arn:aws:lambda:us-east-2:697036326133:function:observe-athena-queries",
+      "ResultPath" : "$.response.athena",
+      "Next": "QueriesDone?"
+    },
+    "QueriesDone?": {
+      "Type": "Choice",
+      "Choices": [
+        {             
+         "Variable": "$.response.athena.done",
+         "BooleanEquals": true,         
+          "Next": "HeatmapHtml"
+        }
+      ],
+      "Default": "WaitQueries60s"
+    },
+    "WaitQueries60s": {
+      "Type":  "Wait",
+      "Seconds": 60,
+      "Next": "ObserveAthenaQueries"
+    },
+    "HeatmapHtml" : {
+      "Type": "Task",
+      "ResultPath": "$",
+      "Resource": "arn:aws:lambda:us-east-2:697036326133:function:caller-html-heatmap",
+      "Next": "ObservePNG"
+    },
+    "ObservePNG": {
+      "Type": "Task",
+      "Resource": "arn:aws:lambda:us-east-2:697036326133:function:observe-pngen",
+      "ResultPath" : "$.response.pngen",
+      "Next": "PngDone?"
+    },
+    "PngDone?": {
+      "Type": "Choice",
+      "Choices": [
+        {             
+         "Variable": "$.response.pngen.done",
+         "BooleanEquals": true,         
+          "Next": "GenerateHtml"
+        }
+      ],
+      "Default": "WaitPng5s"
+    },
+    "WaitPng5s": {
+      "Type":  "Wait",
+      "Seconds": 5,
+      "Next": "ObservePNG"
+    },
+    "GenerateHtml": {
+      "Type": "Task",
+      "Resource": "arn:aws:lambda:us-east-2:697036326133:function:weekly-reports-generate-html",
+      "End": true
+    }
+  }
+}
