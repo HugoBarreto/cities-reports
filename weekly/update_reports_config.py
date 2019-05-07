@@ -11,8 +11,8 @@ import argparse
 
 email_title_es = 'Reporte Semanal FGV BID: '
 email_title_pt = 'Relatório Semanal FGV BID: '
-email_html_es = """<html><head></head><body>Estimado responsable,<br><br>Este es un e-mail automático con el informe de alertas de tráfico basado en datos de Waze para la semana pasada.<br><br>Atentamente,</body></html>"""
-email_html_pt = """<html><head></head><body>Prezado responsável,<br><br>Este é um e-mail automático com o relatório de alertas de tráfego baseado em dados do Waze referentes à semana passada.<br><br>Cordialmente,</body></html>"""
+email_html_es = """<html><head></head><body>Estimado responsable,<br><br>Este es un e-mail automático con el informe en pdf de alertas de tráfico basado en datos de Waze para la semana pasada.<br><br>Si no puede ver el archivo, accede a nuestro repositorio donde se encuentra el archivo para descargar: <a href="http://bd-fgv-public.s3.us-east-2.amazonaws.com/index.html?prefix={prefix}">BID-FGV Public</a><br><br>Atentamente,</body></html>"""
+email_html_pt = """<html><head></head><body>Prezado responsável,<br><br>Este é um e-mail automático com o relatório, em pdf, de alertas de tráfego baseado em dados do Waze referentes à semana passada.<br><br>Caso não consiga visualizar o arquivo, acesse nosso repositório onde se encontra o arquivo para download: <a href="http://bd-fgv-public.s3.us-east-2.amazonaws.com/index.html?prefix={prefix}">BID-FGV Public</a><br><br>Cordialmente,</body></html>"""
 
 ######################################################################################################################
 ############### Cities idiosyncrasies ################################################################################

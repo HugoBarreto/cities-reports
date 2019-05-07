@@ -14,6 +14,8 @@ def get_target_key(source_key):
         month = s if 'month' in s else month
         day = s if 'day' in s else day
         query = s.split('=')[-1] if 'query' in s else query
+        
+    city = city.replace("ã", "a")
     
     prefix = '/'.join(map(lambda x: x.split('=')[-1].zfill(2), ['exports/reports/weekly',year, month, day, city])) + '/'
     

@@ -1,6 +1,7 @@
 import json
 import os
 import boto3
+from datetime import datetime as dt
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from email.mime.application import MIMEApplication
@@ -59,7 +60,7 @@ def send_mail(sender: str, recipients: list, title: str, text: str=None, html: s
     Send email to recipients. Sends one mail to all recipients.
     The sender needs to be a verified email in SES.
     """
-    
+
     msg = create_multipart_message(sender, recipients, title, text, html, attachments)
     return ses.send_raw_email(
         Source=sender,
@@ -71,10 +72,12 @@ def send_mail(sender: str, recipients: list, title: str, text: str=None, html: s
 
 def lambda_handler(event, context):
     
-    bucket = 'waze-reports'
-    key = 'test/test.pdf'
-    
     email_config = event['email']
+    
+    ### Adding link to Public Repo where reports may be downloaded
+    today = dt.fromtimestamp(event['timestamp'])
+    prefix = '/'.join(map(lambda x: str(x).zfill(2), ['exports/reports/weekly', today.year, today.month, today.day])) + '/'
+    email_config['html'] = email_config['html'].format(prefix=prefix)
     
     response = send_mail(**email_config)
     print(response)
