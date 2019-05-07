@@ -25,6 +25,10 @@ def lambda_handler(event, context):
     
     timestamp = time.time()
     today = dt.fromtimestamp(timestamp)
+    ### Caso a execução do lambda ocorra em qualquer dia da semana exceto domingo
+    ### o lambda executará como se fosse no domingo anterior
+    if today.isoweekday() != 7:
+        today = today - td(days=today.isoweekday())
     
     bucket = 'waze-reports'
     
@@ -36,13 +40,6 @@ def lambda_handler(event, context):
         key = 'weekly/support_files/rc_test.json' 
         
     reports_config = get_reports_config(bucket, key)
-    
-    # ### Executando em outro dia da semana, simulando domingo
-    # today = today - td(days=4)
-    # timestamp = today.timestamp()
-    # #### apagar para execução normal
-    # #### Apenas para teste
-    # reports_config = event
     
     total_cities = 0
     for city in reports_config['cities']:
