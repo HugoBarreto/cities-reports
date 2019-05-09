@@ -24,7 +24,7 @@ WITH s1 AS
      FROM p
      GROUP BY street)
 
-SELECT s1.street, share_of_total_interactions_s1, share_of_total_interactions_s2,
+SELECT s1.street, interactions_s1, share_of_total_interactions_s1, interactions_s2, share_of_total_interactions_s2,
        CAST(share_of_total_interactions_s1 AS double) / CAST(share_of_total_interactions_s2 AS double) - 1 AS variation
 FROM s1 LEFT JOIN s2 on s1.street=s2.street
 ORDER BY  share_of_total_interactions_s1 DESC

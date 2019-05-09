@@ -34,12 +34,22 @@ def fetch_cities(test: bool) -> list:
                 {'name': 'Miraflores', 'bucket': 'waze-reports', 'database': 'cities', 'alerts_table': 'pe_lima_waze_alerts',
                  'coord': [-12.1110, -77.03159], 'zoom': 13, 'email_title': email_title_es + 'Miraflores', 'email_html': email_html_es},
             ]
+    
+    cities_test = [
+        
+        {'name': 'Miraflores', 'bucket': 'waze-reports', 'database': 'cities', 'alerts_table': 'pe_lima_waze_alerts',
+        'coord': [-12.1110, -77.03159], 'zoom': 13, 'email_title': email_title_es + 'Miraflores', 'email_html': email_html_es},
+                
+        {'name': 'Manaus', 'bucket': 'waze-reports', 'database': 'cities', 'alerts_table': 'br_manaus_waze_alerts',
+        'coord': [-3.062819, -59.967364], 'zoom': 11.7, 'email_title': email_title_pt + 'Manaus', 'email_html': email_html_pt},
+    ]
+    
     if not test:
         # Return all cities
         return cities
     else:
-        # Return only Miraflores as a list of one element
-        return cities[-1:]
+        # Return only Last city of testing ones as a list of one element
+        return cities_test[-1:]
 
 ######################################################################################################################
 ############### Modify only if there are report's structural changes #################################################
