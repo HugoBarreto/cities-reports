@@ -1,0 +1,137 @@
+<p style="page-break-before: always">
+    
+<!--- Always include past week evolution table --->
+{% if lang == 'pt' %}
+<p>A tabela a seguir mostra a evolução das ruas que tiveram maior participação no total de interações de alertas de {{ title.lower() }} na última semana.</p>
+{% elif lang == 'es' %}
+<p></p>
+{% endif %}
+
+<table class="alert">
+  <tr>
+    <th rowspan="2" class="street">STREET</th>
+    <th colspan="1">{{date_s1}}</th>
+    <th colspan="1">{{date_s2}}</th>
+    <th rowspan="2" class="var">REPORTS DIFF</th>
+  </tr>
+  <tr>  	
+    <th>% TOTAL INTERACTIONS</th>
+    <th>% TOTAL INTERACTIONS</th>
+  </tr>
+    {% set df = df_mini_past %}
+    {% for idx, row in df.iterrows() %}        
+        <tr> 
+        {% set i = loop.index %}
+        {% for colname in df.columns %}
+            {% if row[colname] == "" %}
+                <td>  -  </td>
+            {% elif colname == 'street' %}
+                <td class="street">{{ i }}. {{ row[colname] }}</td>
+            {% elif colname == 'share_s1' or colname == 'share_s2' %} 
+                <td>{{ "{:.2%}".format(row[colname]) }}</td>               
+            {% elif colname == 'variation_share' %}                
+                {% if row['variation_share'] < 0 %}
+                    <td class="good">{{ "{:.2%}".format(row[colname]) }}</td> 
+                {% elif row['variation_share'] >= 0 %}
+                    <td class="bad">{{ "{:.2%}".format(row[colname]) }}</td> 
+                {% else %}
+                    <td class="ok">{{ "{:.2%}".format(row[colname]) }}</td> 
+                {% endif %}
+            {% else %}
+                <td>{{ "{:.0f}".format(row[colname]) }}</td> <!-- "{:.0f}".format(row[colname]) -->
+            {% endif %}
+        {% endfor %}
+    </tr>
+    {% endfor %}
+</table>
+
+<!--- Only include mini+ and mini- tables if there is enough rows --->
+{% if df_table.query("variation_share not in ['']").shape[0] >= 1  %}
+    {% if lang == 'pt' %}
+    <p>As próximas tabelas destacam as ruas com maior variação em sua participação no total de interações de alertas de {{ title.lower() }} em relação a última semana. A primeira tabela mostra as ruas que tiveram maior <strong>redução</strong> de sua participação no total de interações.</p>
+    {% elif lang == 'es' %}
+    <p></p>
+    {% endif %}
+
+    <table class="alert">
+      <tr>
+        <th rowspan="2" class="street">STREET</th>
+        <th colspan="1">{{date_s1}}</th>
+        <th colspan="1">{{date_s2}}</th>
+        <th rowspan="2" class="var">REPORTS DIFF</th>
+      </tr>
+      <tr>  	
+        <th>% TOTAL INTERACTIONS</th>
+        <th>% TOTAL INTERACTIONS</th>
+      </tr>
+        {% set df = df_mini_plus %}
+        {% for idx, row in df.iterrows() %}        
+            <tr> 
+            {% set i = loop.index %}
+            <!--skip rows that have positive variation-->
+            {% if row['variation_share'] is string or row['variation_share'] >= 0 %}
+                {% continue %}
+            {% endif %}
+            {% for colname in df.columns %}
+                {% if row[colname] == "" %}
+                    <td>  -  </td>
+                {% elif colname == 'street' %}
+                    <td class="street">{{ i }}. {{ row[colname] }}</td>
+                {% elif colname == 'share_s1' or colname == 'share_s2' %} 
+                    <td>{{ "{:.2%}".format(row[colname]) }}</td>               
+                {% elif colname == 'variation_share' %}                
+                    <td class="good">{{ "{:.2%}".format(row[colname]) }}</td> 
+                {% else %}
+                    <td>{{ "{:.0f}".format(row[colname]) }}</td> <!-- "{:.0f}".format(row[colname]) -->
+                {% endif %}
+            {% endfor %}
+        </tr>
+
+        {% endfor %}
+
+    </table>
+
+    {% if lang == 'pt' %}
+    <p>A tabela abaixo mostra as ruas com maior <strong>aumento</strong> de sua participação no total de interações.</p>
+    {% elif lang == 'es' %}
+    <p></p>
+    {% endif %}
+
+    <table class="alert">
+      <tr>
+        <th rowspan="2" class="street">STREET</th>
+        <th colspan="1">{{date_s1}}</th>
+        <th colspan="1">{{date_s2}}</th>
+        <th rowspan="2" class="var">REPORTS DIFF</th>
+      </tr>
+      <tr>  	
+        <th>% TOTAL INTERACTIONS</th>
+        <th>% TOTAL INTERACTIONS</th>
+      </tr>
+        {% set df = df_mini_minus %}
+        {% for idx, row in df.iterrows() %}           
+            <tr> 
+            {% set i = loop.index %}
+            <!--skip rows that have negative variation-->
+            {% if row['variation_share'] is string or row['variation_share'] <= 0 %}
+                {% continue %}
+            {% endif %}
+            {% for colname in df.columns %}
+                {% if row[colname] == "" %}
+                    <td>  -  </td>
+                {% elif colname == 'street' %}
+                    <td class="street">{{ i }}. {{ row[colname] }}</td>
+                {% elif colname == 'share_s1' or colname == 'share_s2' %} 
+                    <td>{{ "{:.2%}".format(row[colname]) }}</td>               
+                {% elif colname == 'variation_share' %}                
+                    <td class="bad">{{ "{:.2%}".format(row[colname]) }}</td>                               
+                {% else %}
+                    <td>{{ "{:.0f}".format(row[colname]) }}</td> <!-- "{:.0f}".format(row[colname]) -->
+                {% endif %}
+            {% endfor %}
+        </tr>
+
+        {% endfor %}
+
+    </table>
+{% endif %}

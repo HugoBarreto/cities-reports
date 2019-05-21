@@ -112,10 +112,12 @@ body {
     width: 100%; }
   html body h2, html body h3, html body h4 {
     color: black;
-    font-weight: 400; }
+    font-weight: 400; 
+    margin-top: 8pt;
+    margin-bottom: 8pt;}
   html body h2 {
     break-before: always;
-    font-size: 28pt;
+    font-size: 24pt;
     string-set: heading content(); }
   html body h3 {
     font-weight: 300;
@@ -163,51 +165,91 @@ body {
       html body article#cover address:first-of-type {
         padding-left: 3cm; }
 
-/*
-    html body article.alert h2{
-        margin-bottom: 1cm;}
-*/
+/* Style for the Executive Summary Page*/
+
+  html body article.columns h2 {
+    width: 100%;
+    }
+  html body article.columns section {
+    columns: 2;
+    column-gap: 1cm;
+    margin-top: 0;
+    padding-top: 0cm; }
+    
+   html body article.columns section p {
+      text-align: justify; }
+
+      html body article#columns section p:first-of-type {
+        font-weight: 700; }
+
+
+/* Style for the Alerts Pages*/
+
+    html body article.alert p{
+      text-align: justify;
+        }
+
     html body article.alert table{
       width: 100%;
       text-align: center;
-      margin:0;}
+      margin: 0;
+      margin: 0.6cm;
+      border-collapse: collapse;}
 
       html body article.alert table th{
-        padding: 0px 2px 0px 2px;}
-      
-      html body article.alert table thead th{        
-          font-size: 12px;
-          font-weight: bold;
-        }
+          font-size: 14px;
+          font-weight: 600;
+          padding: 0px 2px 0px 2px;}
+        
+        html body article.alert table th.street{
+            width: 30%;}
 
-      html body article.alert table tr.ok{
-        color: black;}
+        html body article.alert table th.var{
+            width: 20%;}            
 
-      html body article.alert table tr.bad{
-        color: red;}
-
-      html body article.alert table tr.good{
-        color: green;}
-
-      html body article.alert table td{
+    html body article.alert table td{
         padding: 0px 2px 0px 2px;
+        font-size: 13px;
         color: inherit;}
 
+      html body article.alert table td.ok{
+        padding: 0px 2px 0px 2px;
+          color: black;}
+
+      html body article.alert table td.bad{
+        padding: 0px 2px 0px 2px;
+          color: red;}
+
+      html body article.alert table td.good{
+        padding: 0px 2px 0px 2px;
+          color: green;}
+      
       html body article.alert table td.street{
         text-align: left;
-        color: inherit;}
-
-      html body article.alert table tbody td{
-          font-size: 12px;
+        color: inherit;
         }
 
-    html body article.alert img{
+
+    html body article.alert div.img{
       page-break-before: always;
-      display: block;
       margin: auto;
-      border-radius: 8px;
-      width: 90%;
-      height: 90%;}
+      width: 100%;
+      height: 100%;}
+
+        html body article.alert div.img img{
+          display: block;
+          margin: 0 auto;
+          border-radius: 8px;
+          width: auto;
+          height: 80%;      
+          }
+
+        html body article.alert div.img p.underImg{
+          text-align: center;
+          font-size: 12px;
+          margin: 0 auto;
+          width: 60%;
+        }
 
 
 
@@ -251,16 +293,6 @@ body {
             color: #fbc847;
             content: target-counter(attr(href), page);
             float: right; }
-
-
-  html body article#columns section {
-    columns: 2;
-    column-gap: 1cm;
-    padding-top: 1cm; }
-    html body article#columns section p {
-      text-align: justify; }
-      html body article#columns section p:first-of-type {
-        font-weight: 700; }
 
   
   html body article#chapter {

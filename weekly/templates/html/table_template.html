@@ -1,36 +1,38 @@
-<h2>{{ query | replace('_', " ") }}</h2>
-    
+<h2>{{ title }}</h2>
+
+{% set df = df_table %}
+
+{% if lang == 'pt' %}
+<p>A tabela abaixo mostra a concentração de interações dos usuários do Waze com alertas de {{ title.lower() }} em cada uma das ruas na última semana, na semana anterior e a taxa de variação desse indicador. As dez ruas juntas representam <strong>{{ "{:.2%}".format(df.share_s1.sum() if df.share_s1.sum() <= 1 else 1) }}</strong> das interações dos usuários na última semana com esse tipo de alerta.
+</p>
+
+{% elif lang == 'es' %}
+<p>A tabela acima mostra a concentração de interações dos usuários do Waze com alertas de {{ title.lower() }} em cada uma das ruas na última semana, na semana anterior e a taxa de variação desse indicador. As dez ruas juntas representam {{ "{:.2%}".format(df.share_s1.sum()) }} das interações dos usuários na última semana.
+</p>
+{% endif %}
+
 <table class="alert">
   <tr>
-  	<th rowspan="2">STREET</th>
+    <th rowspan="2" class="street">STREET</th>
     <th colspan="1">{{date_s1}}</th>
     <th colspan="1">{{date_s2}}</th>
-    <th rowspan="2">REPORTS DIFF</th>
+    <th rowspan="2" class="var">REPORTS DIFF</th>
   </tr>
   <tr>  	
     <th>% TOTAL INTERACTIONS</th>
     <th>% TOTAL INTERACTIONS</th>
-  </tr>
-      
-    {% for idx, row in df.iterrows() %}
-        {% if row['variation'] is string %}
-            <tr class="ok">
-        {% elif row['variation'] >= 1 %}
-            <tr class="bad">
-        {% elif row['variation'] < -0.1 %}
-            <tr class="good">
-        {% else %}
-            <tr class="ok">
-        {% endif %}
-                
+  </tr>    
+    {% for idx, row in df.iterrows() %}        
+        
+        <tr> 
         {% set i = loop.index %}
         {% for colname in df.columns %}
             {% if row[colname] == "" %}
                 <td>  -  </td>
             {% elif colname == 'street' %}
                 <td class="street">{{ i }}. {{ row[colname] }}</td>
-            {% elif colname == 'variation' or colname == 'share_of_total_interactions_s1' or colname == 'share_of_total_interactions_s2' %} 
-                <td>{{ "{:.2%}".format(row[colname]) }}</td>                
+            {% elif colname == 'share_s1' or colname == 'share_s2' or colname == 'variation_share' %} 
+                <td>{{ "{:.2%}".format(row[colname]) }}</td>                           
             {% else %}
                 <td>{{ "{:.0f}".format(row[colname]) }}</td>
             {% endif %}
@@ -40,3 +42,7 @@
     {% endfor %}
   
 </table>
+
+
+
+
