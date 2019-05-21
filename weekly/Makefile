@@ -5,18 +5,18 @@ upload-queries:
 	aws s3 cp ./templates/queries s3://waze-reports/weekly/support_files/queries --recursive
 
 update-html-templates:
-	cp ./notebooks/report/report.html ./templates/html/
-	cp ./notebooks/report/table_template.html ./templates/html/
+	cp ./templates/html/report.html ./notebooks/report/ 
+	cp ./templates/html/table_template.html  ./notebooks/report/
 
 upload-html-templates: update-html-templates
-	aws s3 cp ./notebooks/report/report.html s3://waze-reports/weekly/support_files/html/
-	aws s3 cp ./notebooks/report/table_template.html s3://waze-reports/weekly/support_files/html/
+	aws s3 cp ./templates/html/report.html s3://waze-reports/weekly/support_files/html/
+	aws s3 cp ./templates/html/table_template.html s3://waze-reports/weekly/support_files/html/
 
 update-css:
-	cp ./notebooks/report/report.css ./templates/css/
+	cp ./templates/css/report.css ./notebooks/report/
 
 upload-css: update-css
-	aws s3 cp ./notebooks/report/report.css s3://waze-reports/weekly/support_files/css/
+	aws s3 cp ./templates/css/report.css s3://waze-reports/weekly/support_files/css/
 
 update-reports-config:
 	python update_reports_config.py
