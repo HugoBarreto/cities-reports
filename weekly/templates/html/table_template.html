@@ -3,11 +3,11 @@
 {% set df = df_table %}
 
 {% if lang == 'pt' %}
-<p>A tabela abaixo mostra a concentração de interações dos usuários do Waze com alertas de {{ title.lower() }} em cada uma das ruas na última semana, na semana anterior e a taxa de variação desse indicador. As dez ruas juntas representam <strong>{{ "{:.2%}".format(df.share_s1.sum() if df.share_s1.sum() <= 1 else 1) }}</strong> das interações dos usuários na última semana com esse tipo de alerta.
+<p>A tabela abaixo mostra a concentração de interações dos usuários do Waze com alertas de {{ title.lower() }} em cada uma das ruas na última semana, na semana anterior e a taxa de variação desse indicador. As {{ df.shape[0] }} ruas juntas representam <strong>{{ "{:.2%}".format(df.share_s1.sum() if df.share_s1.sum() <= 1 else 1) }}</strong> das interações dos usuários na última semana com esse tipo de alerta.
 </p>
 
 {% elif lang == 'es' %}
-<p>A tabela acima mostra a concentração de interações dos usuários do Waze com alertas de {{ title.lower() }} em cada uma das ruas na última semana, na semana anterior e a taxa de variação desse indicador. As dez ruas juntas representam {{ "{:.2%}".format(df.share_s1.sum()) }} das interações dos usuários na última semana.
+<p>La tabla siguiente muestra la concentración de interacciones de los usuarios de Waze con alertas de {{ title.lower() }} en cada una de las calles en la última semana, la semana anterior y la tasa de variación de ese indicador. Las {{ df.shape[0] }} calles juntas representan <strong>{{ "{:.2%}".format(df.share_s1.sum() if df.share_s1.sum() <= 1 else 1) }}</strong> de las interacciones de los usuarios la semana pasada con ese tipo de alerta
 </p>
 {% endif %}
 

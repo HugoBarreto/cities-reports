@@ -1,13 +1,19 @@
 <article class="columns">
+    
     {% if lang == 'pt' %}
     <h2 style="break-before: avoid;">Sumário Executivo</h2>
     <section>                    
         <p>Diariamente, milhões de pessoas produzem dados de seu cotidiano nas cidades ao redor do mundo através de seus dispositivos eletrônicos conectados à Internet. O acesso a esse massivo volume de dados torna possível conhecer a dinâmica de uma cidade em seus mais diversos aspectos: mobilidade, saúde, segurança, etc.</p>            
         <p>Em parceria com o Waze, uma das maiores plataformas de mobilidade do mundo, podemos analisar um conjunto de dados das cidades participantes do Projeto Big Data para o Desenvolvimento Urbano e Sustentável a fim de se planejar políticas públicas eficientes que consideram a perspectiva do cidadão.</p>
-        <p>O presente relatório visa destacar as ocorrências mais relevantes durante a última semana, mostrando as ruas com maior interação dos usuários por alertas de engarrafamento, acidentes, buracos, semáforos defeituosos e enchentes, além de indicar o valor das mesmas vias na semana anterior e sua variação. 
-</p>        
-    {% elif lang == 'es' %}    
-        <p></p>
-    {% endif %}
+        <p>O presente relatório visa destacar as ocorrências mais relevantes durante a última semana, mostrando as ruas com maior interação dos usuários por alertas de engarrafamento, acidentes, buracos, semáforos defeituosos e enchentes, além de indicar o valor das mesmas vias na semana anterior e sua variação.</p>
     </section>
+    
+    {% elif lang == 'es' %}
+    <h2 style="break-before: avoid;">Resumen Ejecutivo</h2>
+    <section>
+        <p>Diariamente, millones de personas producen datos de su cotidiano en las ciudades alrededor del mundo a través de sus dispositivos electrónicos conectados a Internet. El acceso a ese volumen masivo de datos hace posible conocer la dinámica de una ciudad en sus aspectos más diversos: movilidad, salud, seguridad, etc.</p>
+        <p>En asociación con Waze, una de las mayores plataformas de movilidad del mundo, podemos analizar un conjunto de datos de las ciudades participantes en el Proyecto Big Data para el Desarrollo Urbano y Sostenible a fin de planificar políticas públicas eficientes que consideren la perspectiva del ciudadano.</p>
+        <p>El presente informe pretende destacar los sucesos más relevantes durante la última semana, mostrando las calles con la mayor interacción de los usuarios por alertas de embotellamiento, accidentes, agujeros, semáforos defectuosos e inundaciones, además de indicar el valor de estas mismas vías la semana anterior y su variación.</p>
+    </section>
+    {% endif %}
 </article>

@@ -1,8 +1,11 @@
 <div class="img">
-    <img src="{{ images[k] }}">
+    <img src="{{ images[alert] }}">
+    {% set df = df_table %}
     {% if lang == 'pt' %}
-    <p class="underImg">A imagem destaca os alertas responsáveis por 80% da interação dos usuários nas {{ table_rows }} ruas com maior interação. Isto é, tais alertas são responsáveis por <strong>{{ "{:.2%}".format(df_table.share_s1.sum() * 0.8) }} do total de interações da semana</strong></p>
+    <p class="underImg">A imagem destaca os alertas responsáveis por 80% da interação dos usuários nas {{ df.shape[0] }} ruas com maior interação. Isto é, tais alertas são responsáveis por <strong>{{ "{:.2%}".format(df.share_s1.sum() * 0.8) }} do total de interações da semana</strong></p>
+    
     {% elif lang == 'es' %}    
-    <p class="underImg">Leganda da foto</p>
+    <p class="underImg">La imagen destaca las alertas responsables por el 80% de la interacción de los usuarios en las {{ df.shape[0] }} calles con la mayor interacción. Es decir, estas alertas son responsables por el <strong>{{ "{:.2%}".format(df.share_s1.sum() * 0.8) }} del total de interacciones de la semana</strong></p>
     {% endif %}
+    
 </div>

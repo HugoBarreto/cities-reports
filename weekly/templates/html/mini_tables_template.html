@@ -1,10 +1,13 @@
+{% if df_mini_past.shape[0] >= 1 and df_table.query("variation_share not in ['']").shape[0] >= 1  %}
 <p style="page-break-before: always">
+{% endif %}
+<!--- Include past week evolution table if there is data --->
+{% if df_mini_past.shape[0] >= 1  %}
     
-<!--- Always include past week evolution table --->
 {% if lang == 'pt' %}
-<p>A tabela a seguir mostra a evolução das ruas que tiveram maior participação no total de interações de alertas de {{ title.lower() }} na última semana.</p>
+<p>A tabela a seguir mostra a evolução das ruas que tiveram maior participação no total de interações de alertas de {{ title.lower() }} na semana {{ date_s2 }}.</p>
 {% elif lang == 'es' %}
-<p></p>
+<p>La tabla siguiente muestra la evolución de las calles que tuvieron la mayor participación en el total de interacciones de alertas de {{ title.lower() }} en la semana {{ date_s2 }}.</p>
 {% endif %}
 
 <table class="alert">
@@ -44,13 +47,14 @@
     </tr>
     {% endfor %}
 </table>
+{% endif %}
 
 <!--- Only include mini+ and mini- tables if there is enough rows --->
 {% if df_table.query("variation_share not in ['']").shape[0] >= 1  %}
     {% if lang == 'pt' %}
     <p>As próximas tabelas destacam as ruas com maior variação em sua participação no total de interações de alertas de {{ title.lower() }} em relação a última semana. A primeira tabela mostra as ruas que tiveram maior <strong>redução</strong> de sua participação no total de interações.</p>
     {% elif lang == 'es' %}
-    <p></p>
+    <p>Las próximas tablas destacan las calles con la mayor variación en su participación en el total de interacciones de alertas de {{ title.lower() }} en relación a la última semana. La primera tabla muestra las calles que tuvieron la mayor <strong>reducción</strong> de su participación en el total de interacciones.</p>
     {% endif %}
 
     <table class="alert">
@@ -94,7 +98,7 @@
     {% if lang == 'pt' %}
     <p>A tabela abaixo mostra as ruas com maior <strong>aumento</strong> de sua participação no total de interações.</p>
     {% elif lang == 'es' %}
-    <p></p>
+    <p>La tabla siguiente muestra las calles con el mayor <strong>aumento</strong> de su participación en el total de interacciones.</p>
     {% endif %}
 
     <table class="alert">

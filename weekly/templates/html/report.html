@@ -18,9 +18,9 @@
     </article>        
     {% include exec_summary %}        
     <article class="alert">
-        {% for k, (title, df_table, df_mini_plus, df_mini_minus, df_mini_past) in queries_df.items() %}                
+        {% for alert, (title, df_table, df_mini_plus, df_mini_minus, df_mini_past) in alerts_vars.items() %}                
             {% include table_template %}            
-            {% include mini_table_template %}            
+            {% include mini_tables_template %}            
             {% include img_template %}
         {% endfor %}
     </article>
