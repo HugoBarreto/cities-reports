@@ -4,7 +4,7 @@ WITH timePeriod AS
          (SELECT uuid, street, type, subtype, MAX(nthumbsup) + 1 AS interactions
          FROM {table}
          WHERE city = '{city}'
-             AND ({date_filters}              )              
+             AND ({date_filter})              
          GROUP BY  uuid, type, subtype, street)
     
      SELECT type, subtype, street, SUM(interactions) AS interactions
