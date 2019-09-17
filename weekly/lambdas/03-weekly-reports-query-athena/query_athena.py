@@ -1,5 +1,6 @@
 import json
 import boto3
+import datetime
 from datetime import datetime as dt
 from datetime import timedelta as td
 
@@ -7,57 +8,39 @@ from datetime import timedelta as td
 s3 = boto3.client('s3')
 athena = boto3.client('athena')
 
-def prev_weeks_days(today):
-    '''(datetime.date) -> list(tuple)
+def get_payload(bucket, key):
     
-    Return a list of tuple (datetime.date, datetime.date) where each entry has the day when a week begins and the day when it ends.
-    The beggining and end of each week is based on today. The weeks are ordered by most recent dates.
-    
-    >>> today = dt.now().date()
-    >>> today
-    datetime.date(2019, 2, 19)
-    
-    >>> prev_weeks_days(today)
-    [(datetime.date(2019, 2, 12), datetime.date(2019, 2, 18)), (datetime.date(2019, 2, 5), datetime.date(2019, 2, 11))]
-    
-    >>> prev_weeks_days(today)[0]
-    (datetime.date(2019, 2, 12), datetime.date(2019, 2, 18))
-    >>> prev_weeks_days(today)[1]
-    (datetime.date(2019, 2, 5), datetime.date(2019, 2, 11))
-    '''
-    return [(today - td(days=7*i), today - td(days=1+7*(i-1))) for i in range(1,2+1)]
+    return s3.get_object(Bucket=bucket, Key=key)['Body'].read().decode('utf-8')
 
-def date_filters(today):
-    temp = []
-    prev_weeks = prev_weeks_days(today)
+def get_file(bucket, key, read_function=lambda x: x):
     
-    for sun, sat in prev_weeks:
-        if sun.month != sat.month:
-            if sun.year != sat.year:
-                temp.append(f"""((year = {sun.year} AND month = {sun.month} AND day BETWEEN {sun.day} AND 31) OR (year = {sat.year} AND month = {sat.month} AND day BETWEEN 1 AND {sat.day}))""")
-            else:
-                temp.append(f"""year = {sun.year} AND ((month = {sun.month} AND day BETWEEN {sun.day} AND 31) OR (month = {sat.month} AND day BETWEEN 1 AND {sat.day}))""")
-        else:
-            temp.append(f"""year = {sun.year} AND month = {sun.month}  AND day BETWEEN {sun.day} AND {sat.day}""")
+    return read_function(get_payload(bucket, key))
+
+def daterange(start_date, end_date):
+    for n in range(int ((end_date - start_date).days)):
+        yield start_date + td(n)
+
+def date_filter(start_date: datetime.date, end_date: datetime.date, hour_interval: tuple=(0,23)) -> str:
+    '''(datetime.date, datetime.date, tuple(int, int)) -> list(tuple)
     
-    return temp
+    Return a string which is a sql date conditional for data partioned by year, month, day and hour. 
+    It filters data from start_date to end_date (not inclusive) in the specified hour_interval.
+    
+    '''
+    return 'OR '.join(
+        [f"(year={d.year} AND month={d.month} AND day={d.day} AND hour BETWEEN {hour_interval[0]} AND {hour_interval[1]})\n" + " "*18 
+        for d in daterange(start_date, end_date)]).rstrip()
 
 def get_query(event, today):
     
+    # Target query template's Bucket and Key
     bucket = event['task']['bucket']
-    key = event['task']['key']
+    key = event['task']['key']    
     
-    response = s3.get_object(Bucket=bucket, Key=key)
-    
-    # this is the raw query
-    payload = response['Body'].read().decode('utf-8')
-
-    query = payload.format(city=event['city'], date_filters=date_filters(today), 
-                            table=event['task']['table'],
-                            limit=event['task']['params']['limit'])
-    
-    return query
-
+    # Get query template and format it
+    return get_file(bucket, key).format(city=event['city'], date_filter=date_filter(today - td(days=7), today), 
+                                                      table=event['task']['table'],
+                                                      limit=event['task']['params']['limit'])        
 
 def lambda_handler(event, context):
     
@@ -69,7 +52,7 @@ def lambda_handler(event, context):
     query_prefix = event['prefix'] + f"query_name={event['task']['query_name']}/"
     S3_OUTPUT = "s3://" + bucket +  "/" + query_prefix
 
-    # created query
+    # get formatted query
     query = get_query(event, today)
     
     # DATABASE where the tables are
@@ -82,7 +65,8 @@ def lambda_handler(event, context):
         ResultConfiguration={'OutputLocation': S3_OUTPUT},
         WorkGroup='AutomaticReports')
     
-    payload = {'CSVBucket': bucket, "CSVKey": query_prefix + response['QueryExecutionId'] + ".csv"}
-    payload['QueryExecutionId'] = response['QueryExecutionId']
+    # Return query info to weekly_reports_caller that will be passed to State Machine to keep track of queries and theirs outputs
+    payload = {'CSVBucket': bucket, "CSVKey": query_prefix + response['QueryExecutionId'] + ".csv",
+               'QueryExecutionId': response['QueryExecutionId']}
     
     return payload

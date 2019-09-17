@@ -20,21 +20,22 @@ def Map(coordinates: list, zoom_start: int, tiles: str, zoom_control: bool) -> f
     
     return folium.Map(location=coordinates, zoom_start=zoom_start, tiles=tiles, zoom_control=zoom_control)
 
-
 def HeatMap(alerts):
     return folium.plugins.HeatMap(list(zip(alerts.latitude.values, alerts.longitude.values)),
                                     min_opacity=0.1,
                                     radius=3, blur=4,
-                                    max_zoom=10,
-                                    )
-                 
+                                    max_zoom=10,)      
 
+def filter_alerts(alerts_df, report_params):
+    
+    return alerts_df[alerts_df.cum_share_street < 0.8] if alerts_df.shape[0] > report_params['table_rows']*5 else alerts_df
 
 def lambda_handler(event, context):
     
     bucket = event['bucket']
     
-    alerts = pd.read_csv(StringIO(get_file(bucket=event['task']['CSVBucket'], key=event['task']['CSVKey'])))
+    alerts = filter_alerts(pd.read_csv(StringIO(get_file(bucket=event['task']['CSVBucket'], key=event['task']['CSVKey']))),
+                           event['report']['params'])
     
     base_map = Map(**event['task']['config'])
     

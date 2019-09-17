@@ -15,42 +15,38 @@ def read_response(response):
 def lambda_handler(event, context):
 
     city = event['cities'][event['stepfunction']['city']]
-    
-    bucket = city['bucket']
-    prefix = city['prefix']
+        
+    # Calls Athena for each query, sending it a task
+    for query in city['queries']:
+        # update Athena task
+        city['task'] = query
+        
+        # calling Athena
+        response = lambd.invoke(FunctionName='weekly-reports-query-athena',
+                                Payload=json.dumps(city))
+        
+        # update city['queries'][query] information
+        query.update(read_response(response))
+        
+    # Start Execution of weekly-reports State Machine, which will coordinate all the process of report generation from now on.
     timestamp = city['timestamp']
     today = dt.fromtimestamp(timestamp)
     
-    for query in city['queries']:
-        city['task'] = query
-    
-        response = lambd.invoke(
-                        FunctionName='weekly-reports-query-athena',
-                        #InvocationType='Event',
-                        Payload=json.dumps(city))
-        
-        query.update(read_response(response))
-        
-        
-    stepfunction.start_execution(
-        stateMachineArn = "arn:aws:states:us-east-2:697036326133:stateMachine:weekly-reports", 
-        name= f"{''.join(city['city'].split())}-{today.year}-{today.month}-{today.day}-{int(timestamp)}",
-        input= json.dumps(city)
-        )
+    stepfunction.start_execution(stateMachineArn = "arn:aws:states:us-east-2:697036326133:stateMachine:weekly-reports", 
+                                 name= f"{''.join(city['city'].split())}-{today.year}-{today.month}-{today.day}-{int(timestamp)}",
+                                 input= json.dumps(city))
     
     ### Testing purpose
-    open('/tmp/city_config.json', 'w').write(json.dumps(city))
-    s3.upload_file(
-        '/tmp/city_config.json', Bucket=bucket, 
-        Key= city['prefix'] + "stepfunction_input.json"
-        )
+    bucket = city['bucket']
+    prefix = city['prefix']
     
+    open('/tmp/city_config.json', 'w').write(json.dumps(city))
+    s3.upload_file('/tmp/city_config.json', Bucket=bucket, Key= prefix + "stepfunction_input.json")
     
     #### Starter State Machine Variables
     sf_starter = event['stepfunction']
     
     sf_starter['city'] += 1
-    if sf_starter['city'] == sf_starter['totalCities']:
-        sf_starter['done'] = True
+    sf_starter['done'] = True if sf_starter['city'] == sf_starter['totalCities'] else False    
     
     return sf_starter

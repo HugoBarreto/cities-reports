@@ -27,8 +27,8 @@ def lambda_handler(event, context):
                 config = {k:v for k, v in event['report']['img']['heatmap_config'].items() if k != 'tiles_list'}
                 config['tiles'] = tiles
                 
-                task = {'html_key': html_key, 'png_key': png_key ,
-                        'alert': query_name, 'CSVBucket': query['CSVBucket'], 'CSVKey': query['CSVKey'],
+                task = {'html_key': html_key, 'png_key': png_key, 'alert': query['related_alert'],
+                        'CSVBucket': query['CSVBucket'], 'CSVKey': query['CSVKey'],
                         'tiles': tiles, 'config': config}
                 
                 event['report']['img']['files'].append(task)
