@@ -46,8 +46,8 @@ def lambda_handler(event, context):
     
 
     key =  event['prefix'] + 'datasets.js'
-    # s3.upload_file('/tmp/datasets.js', Bucket=bucket, Key=key)
-    s3.upload_file('/tmp/datasets.js', Bucket=bucket, Key='test/datasetsOutput.js')
+    s3.upload_file('/tmp/datasets.js', Bucket=bucket, Key=key)
+    # s3.upload_file('/tmp/datasets.js', Bucket=bucket, Key='test/datasetsOutput.js')
     event['task']['dataset_key'] = key
     
     ########### mapConfig.js setup
@@ -64,13 +64,13 @@ def lambda_handler(event, context):
         f.write('const config = ' + json.dumps(mapConfig) + ';')
 
     key =  event['prefix'] + 'mapConfig.js'
-    # s3.upload_file('/tmp/mapConfig.js', Bucket=bucket, Key=key)
+    s3.upload_file('/tmp/mapConfig.js', Bucket=bucket, Key=key)
     # s3.upload_file('/tmp/mapConfig.js', Bucket=bucket, Key='test/mapConfigOutput.js')
     event['task']['config_key'] = key
     
 
 
-    # lambd.invoke(   
-    #     FunctionName='pngen',
-    #     InvocationType='Event',
-    #     Payload=json.dumps(event))
+    lambd.invoke(   
+        FunctionName='pngen',
+        InvocationType='Event',
+        Payload=json.dumps(event))
