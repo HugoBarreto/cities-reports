@@ -1,0 +1,193 @@
+{
+    "city": "Montevideo",
+    "lang": "es",
+    "bucket": "waze-reports",
+    "queries": [
+      {
+        "query_name": "ALERTS",
+        "database": "cities",
+        "table": "uy_montevideo_waze_alerts",
+        "params": {
+          "limit": ""
+        },
+        "bucket": "waze-reports",
+        "key": "weekly/support_files/queries/ALERTS.sql",
+        "CSVBucket": "waze-reports",
+        "CSVKey": "weekly/data/city=Montevideo/year=2019/month=9/day=22/query_name=ALERTS/2a20bdc3-5d29-46db-8e9b-9541ccde1cd7.csv",
+        "QueryExecutionId": "2a20bdc3-5d29-46db-8e9b-9541ccde1cd7"
+      },
+      {
+        "query_name": "JAM_HEATMAP",
+        "database": "cities",
+        "table": "uy_montevideo_waze_alerts",
+        "params": {
+          "limit": "LIMIT 20"
+        },
+        "bucket": "waze-reports",
+        "key": "weekly/support_files/queries/JAM_ALERTS_HEATMAP.sql",
+        "related_alert": "JAM",
+        "CSVBucket": "waze-reports",
+        "CSVKey": "weekly/data/city=Montevideo/year=2019/month=9/day=22/query_name=JAM_HEATMAP/88e59232-07a7-49c6-bde9-a329cab854b2.csv",
+        "QueryExecutionId": "88e59232-07a7-49c6-bde9-a329cab854b2"
+      },
+      {
+        "query_name": "ACCIDENTS_HEATMAP",
+        "database": "cities",
+        "table": "uy_montevideo_waze_alerts",
+        "params": {
+          "limit": "LIMIT 20"
+        },
+        "bucket": "waze-reports",
+        "key": "weekly/support_files/queries/ACCIDENTS_HEATMAP.sql",
+        "related_alert": "ACCIDENT",
+        "CSVBucket": "waze-reports",
+        "CSVKey": "weekly/data/city=Montevideo/year=2019/month=9/day=22/query_name=ACCIDENTS_HEATMAP/b5f7be26-1383-4d07-a8bd-0eaa08bbe95c.csv",
+        "QueryExecutionId": "b5f7be26-1383-4d07-a8bd-0eaa08bbe95c"
+      },
+      {
+        "query_name": "POT_HOLE_HEATMAP",
+        "database": "cities",
+        "table": "uy_montevideo_waze_alerts",
+        "params": {
+          "limit": "LIMIT 20"
+        },
+        "bucket": "waze-reports",
+        "key": "weekly/support_files/queries/POT_HOLE_HEATMAP.sql",
+        "related_alert": "HAZARD_ON_ROAD_POT_HOLE",
+        "CSVBucket": "waze-reports",
+        "CSVKey": "weekly/data/city=Montevideo/year=2019/month=9/day=22/query_name=POT_HOLE_HEATMAP/2d356d76-5063-4f29-b8de-b54410eab1e7.csv",
+        "QueryExecutionId": "2d356d76-5063-4f29-b8de-b54410eab1e7"
+      },
+      {
+        "query_name": "TRAFFIC_LIGHT_FAULT_HEATMAP",
+        "database": "cities",
+        "table": "uy_montevideo_waze_alerts",
+        "params": {
+          "limit": "LIMIT 20"
+        },
+        "bucket": "waze-reports",
+        "key": "weekly/support_files/queries/TRAFFIC_LIGHT_FAULT_HEATMAP.sql",
+        "related_alert": "HAZARD_ON_ROAD_TRAFFIC_LIGHT_FAULT",
+        "CSVBucket": "waze-reports",
+        "CSVKey": "weekly/data/city=Montevideo/year=2019/month=9/day=22/query_name=TRAFFIC_LIGHT_FAULT_HEATMAP/b0a79463-194f-4d7c-90a1-7ff8c3ac653b.csv",
+        "QueryExecutionId": "b0a79463-194f-4d7c-90a1-7ff8c3ac653b"
+      },
+      {
+        "query_name": "FLOOD_HEATMAP",
+        "database": "cities",
+        "table": "uy_montevideo_waze_alerts",
+        "params": {
+          "limit": "LIMIT 20"
+        },
+        "bucket": "waze-reports",
+        "key": "weekly/support_files/queries/FLOOD_HEATMAP.sql",
+        "related_alert": "HAZARD_WEATHER_FLOOD",
+        "CSVBucket": "waze-reports",
+        "CSVKey": "weekly/data/city=Montevideo/year=2019/month=9/day=22/query_name=FLOOD_HEATMAP/702a5261-800c-4bc0-99a1-065384011ba0.csv",
+        "QueryExecutionId": "702a5261-800c-4bc0-99a1-065384011ba0"
+      }
+    ],
+    "report": {
+      "params": {
+        "table_rows": 20,
+        "mini_table_rows": 3,
+        "mini_table_lastweek_rows": 5,
+        "tiles": "CartoDB positron"
+      },
+      "types_alert": {
+        "type": [
+          "JAM",
+          "ACCIDENT"
+        ],
+        "subtype": [
+          "HAZARD_ON_ROAD_POT_HOLE",
+          "HAZARD_ON_ROAD_TRAFFIC_LIGHT_FAULT",
+          "HAZARD_WEATHER_FLOOD"
+        ]
+      },
+      "titles": {
+        "pt": {
+          "ACCIDENT": "ACIDENTES",
+          "JAM": "ENGARRAFAMENTOS",
+          "HAZARD_ON_ROAD_POT_HOLE": "BURACOS",
+          "HAZARD_ON_ROAD_TRAFFIC_LIGHT_FAULT": "SEMÁFAROS COM DEFEITO",
+          "HAZARD_WEATHER_FLOOD": "ENCHENTES"
+        },
+        "es": {
+          "ACCIDENT": "ACCIDENTES",
+          "JAM": "ATASCOS",
+          "HAZARD_ON_ROAD_POT_HOLE": "AGUJEROS",
+          "HAZARD_ON_ROAD_TRAFFIC_LIGHT_FAULT": "SEMÁFAROS CON DEFECTO",
+          "HAZARD_WEATHER_FLOOD": "INUNDACIONES"
+        }
+      },
+      "img": {
+        "heatmap_config": {
+          "coordinates": [
+            -34.8485,
+            -56.1967
+          ],
+          "zoom_start": 11.6,
+          "tiles_list": [
+            "CartoDB dark_matter",
+            "CartoDB positron"
+          ],
+          "zoom_control": false
+        },
+        "cover": {
+          "bucket": "waze-reports",
+          "key": "weekly/support_files/img/cover.png"
+        }
+      },
+      "html": {
+        "bucket": "waze-reports",
+        "report_template": "weekly/support_files/html/report.html",
+        "table_template": "weekly/support_files/html/table_template.html",
+        "mini_tables": "weekly/support_files/html/mini_tables_template.html",
+        "exec_summary": "weekly/support_files/html/exec_summary.html",
+        "img_template": "weekly/support_files/html/img_template.html"
+      },
+      "css": {
+        "bucket": "waze-reports",
+        "keys": [
+          "weekly/support_files/css/report.css"
+        ]
+      }
+    },
+    "email": {
+      "sender": "Pablo Cerdeira <pablo.cerdeira@fgv.br>",
+      "recipients": [
+        "bid-fgv-ciudades@googlegroups.com",
+        "hugobarreto94@gmail.com"
+      ],
+      "title": "Reporte Semanal FGV BID: Montevideo",
+      "html": "<html><head></head><body>Estimado responsable,<br><br>Este es un e-mail automático con el informe en pdf de alertas de tráfico basado en datos de Waze para la semana pasada.<br><br>Si no puede ver el archivo, accede a nuestro repositorio donde se encuentra el archivo para descargar: <a href=\"http://bd-fgv-public.s3.us-east-2.amazonaws.com/index.html?prefix={prefix}\">BID-FGV Public</a><br><br>Atentamente,</body></html>",
+      "attachments": []
+    },
+    "public": {
+      "bucket": "bd-fgv-public"
+    },
+    "polygon": null,
+    "prefix": "weekly/data/city=Montevideo/year=2019/month=9/day=22/",
+    "timestamp": 1569153613.900094,
+    "task": {
+      "query_name": "FLOOD_HEATMAP",
+      "database": "cities",
+      "table": "uy_montevideo_waze_alerts",
+      "params": {
+        "limit": "LIMIT 20"
+      },
+      "bucket": "waze-reports",
+      "key": "weekly/support_files/queries/FLOOD_HEATMAP.sql",
+      "related_alert": "HAZARD_WEATHER_FLOOD",
+      "CSVBucket": "waze-reports",
+      "CSVKey": "weekly/data/city=Montevideo/year=2019/month=9/day=22/query_name=FLOOD_HEATMAP/702a5261-800c-4bc0-99a1-065384011ba0.csv",
+      "QueryExecutionId": "702a5261-800c-4bc0-99a1-065384011ba0"
+    },
+    "response": {
+      "athena": {
+        "done": true,
+        "error": false
+      }
+    }
+  }

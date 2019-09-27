@@ -1,0 +1,1 @@
+cat eventin.json | sudo docker run --rm -v "$PWD":/var/task -i -e DOCKER_LAMBDA_USE_STDIN=1 lambci/lambda:python3.6 caller_html_heatmap.lambda_handler > eventout.json

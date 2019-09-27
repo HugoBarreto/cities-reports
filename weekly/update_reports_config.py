@@ -1,4 +1,4 @@
-import boto3
+#import boto3
 import json
 import argparse
 
@@ -108,15 +108,17 @@ def city_dict(name: str, lang: str, output_bucket: str, support_files_bucket: st
                                       'HAZARD_WEATHER_FLOOD': 'INUNDACIONES'}
                               },
             
-                    'img': {
+                    'img': {'bucket': support_files_bucket,
+                            'cover': 'weekly/support_files/img/cover.png',
                             'heatmap_config' : {'coordinates': coord,
                                                 'zoom_start': zoom,
+                                                '#TopStreetsDisplayed': 5,
                                                 'tiles_list': ["CartoDB dark_matter", "CartoDB positron"],
                                                 'zoom_control': False},
-                        
-                            'cover': {'bucket': support_files_bucket, 'key': 'weekly/support_files/img/cover.png'},
+                            'datasetsTemplate': 'weekly/support_files/img/datasets.json',                            
+                            'mapConfigTemplate': 'weekly/support_files/img/mapConfig.json',
+                            'KeplerHTML':  'weekly/support_files/img/kepler.gl.html',
                             },
-            
                      'html':{
                              'bucket': support_files_bucket,
                              'report_template': 'weekly/support_files/html/report.html',

@@ -12,14 +12,4 @@ SELECT uuid, latitude, longitude, interactions, street, reliability, start_time,
     ROUND(CAST(interactions AS double) / (SUM(interactions) OVER (PARTITION BY street)), 4) AS share_street,
     SUM(CAST(interactions AS double)) OVER (PARTITION BY street ORDER BY interactions DESC, reliability DESC, start_time) / (SUM(interactions) OVER (PARTITION BY street)) AS cum_share_street
 FROM p 
-WHERE street IN 
-    (
-        SELECT street
-        FROM 
-            (SELECT street, SUM(interactions) AS interactions
-            FROM p
-            GROUP BY street
-            ORDER BY interactions DESC)
-        {limit}
-    )
 ORDER BY street ASC, interactions DESC
