@@ -21,3 +21,4 @@ v0.2/
 .keep
 /weekly/data/output/
 **/lambdas/**/opt/
+.env

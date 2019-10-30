@@ -77,10 +77,10 @@ Paper A4 Landscape: 297x210 (Width x Height)
   @top-right {
     content: none; } }
 
-@page :first {
-  background: url(background-home.jpg) no-repeat center;
+/* @page :first {
+  background: url(background-homepage.png) no-repeat center;
   background-size: cover;
-  margin: 0; }
+  margin: 0; } */
 
 @page chapter {
   background: #008ed0;
@@ -99,10 +99,10 @@ html {
   font-weight: 300;
   line-height: 1.5; }
 
-body {
-  background: url(background-homepage.jpg) no-repeat center;
+/* body {
+  background: url(background-homepage.png) no-repeat center;
   background-size: cover;
-  }
+  } */
 
   html body h1 {
     color: #003d7d;

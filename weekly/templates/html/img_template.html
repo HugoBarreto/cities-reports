@@ -2,10 +2,10 @@
     <img src="{{ images[alert] }}">
     {% set df = df_table %}
     {% if lang == 'pt' %}
-    <p class="underImg">A imagem destaca os alertas responsáveis por 80% da interação dos usuários nas {{ df.shape[0] }} ruas com maior interação. Isto é, tais alertas são responsáveis por <strong>{{ "{:.2%}".format(df.share_s1.sum() * 0.8) }} do total de interações da semana</strong></p>
+    <p class="underImg">A imagem mostra o mapa de calor de todo os alertas no período e destaca os trechos das ruas que concentraram a maior quantidade de interações. <a href="{{ mapLinks[alert] }}">Clique aqui</a> para uma versão interativa do mapa.</p>
     
     {% elif lang == 'es' %}    
-    <p class="underImg">La imagen destaca las alertas responsables por el 80% de la interacción de los usuarios en las {{ df.shape[0] }} calles con la mayor interacción. Es decir, estas alertas son responsables por el <strong>{{ "{:.2%}".format(df.share_s1.sum() * 0.8) }} del total de interacciones de la semana</strong></p>
+    <p class="underImg">La imagen muestra el mapa de calor de todas las alertas del período y destaca los tramos de las calles que concentraron mayor cantidad de interacciones. <a href="{{ mapLinks[alert] }}">Haga clic aquí</a> para una versión interactiva del mapa.</p>
     {% endif %}
     
 </div>

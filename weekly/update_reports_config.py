@@ -21,36 +21,42 @@ def fetch_cities(test: bool) -> list:
     cities = [
                 {'name': 'São Paulo', 'support_files_bucket': 'waze-reports', 'output_bucket': 'waze-reports', 
                  'database': 'cities', 'alerts_table': 'br_saopaulo_waze_alerts', 'lang': 'pt',
-                 'coord': [-23.5333, -46.63333], 'zoom': 11.2, 'email_title': email_title_pt + 'São Paulo', 'email_html': email_html_pt},
+                 'coord': [-23.616731767918242, -46.646151906204196], 'zoom': 10.737127979223174, "bearing": 7.265007320644223,
+                 'email_title': email_title_pt + 'São Paulo', 'email_html': email_html_pt},   
 
                 {'name': 'Xalapa', 'support_files_bucket': 'waze-reports', 'output_bucket': 'waze-reports', 
                  'database': 'cities', 'alerts_table': 'mx_xalapa_waze_alerts', 'lang': 'es',
-                 'coord': [19.5437, -96.91033], 'zoom': 13, 'email_title': email_title_es + 'Xalapa', 'email_html': email_html_es},
+                 'coord': [19.530151510635196, -96.90198775078598], 'zoom': 12.145642381455948, "bearing": 24.658857979502198,
+                 'email_title': email_title_es + 'Xalapa', 'email_html': email_html_es},        
 
                 {'name': 'Quito', 'support_files_bucket': 'waze-reports', 'output_bucket': 'waze-reports',
                  'database': 'cities', 'alerts_table': 'ec_quito_waze_alerts', 'lang': 'es',
-                 'coord': [-0.185219,  -78.5248], 'zoom': 11.2, 'email_title': email_title_es + 'Quito', 'email_html': email_html_es},
+                 'coord': [-0.1863882229480855,  -78.49523486111293], 'zoom': 11.617205442512928, "bearing": -45.443631039531475,
+                 'email_title': email_title_es + 'Quito', 'email_html': email_html_es},
 
                 {'name': 'Montevideo', 'support_files_bucket': 'waze-reports', 'output_bucket': 'waze-reports',
                  'database': 'cities', 'alerts_table': 'uy_montevideo_waze_alerts', 'lang': 'es',
-                 'coord': [ -34.8485,  -56.1967], 'zoom': 11.6, 'email_title': email_title_es + 'Montevideo', 'email_html': email_html_es},
+                 'coord': [ -34.87716717315771,  -56.144811424924406], 'zoom': 11.737667601166825, "bearing": 25, 
+                 'email_title': email_title_es + 'Montevideo', 'email_html': email_html_es},
 
                 {'name': 'Miraflores', 'support_files_bucket': 'waze-reports', 'output_bucket': 'waze-reports',
                  'database': 'cities', 'alerts_table': 'pe_lima_waze_alerts', 'lang': 'es',
-                 'coord': [-12.1110, -77.03159], 'zoom': 13, 'email_title': email_title_es + 'Miraflores', 'email_html': email_html_es},
+                 'coord': [-12.10536326412767, -77.02580527027379], 'zoom': 12.572405006030382, "bearing": 22.682284,
+                 'email_title': email_title_es + 'Miraflores', 'email_html': email_html_es},
             ]
     if not test:
         # Return all cities
         return cities
     else:
         # Return only Miraflores as a list of one element
-        return cities[-1:]
+        # return cities[-1:]
+        return cities[:1]
 
 ######################################################################################################################
 ############### Modify only if there are report's structural changes #################################################
 
 def city_dict(name: str, lang: str, output_bucket: str, support_files_bucket: str, database: str, alerts_table: str, coord: list, 
-              zoom: float, email_title: str, email_html: str, test: bool, table_rows: int=20, mini_table_rows: int=3, 
+              zoom: float, bearing: float, email_title: str, email_html: str, test: bool, table_rows: int=20, mini_table_rows: int=3, 
               mini_table_lastweek_rows: int=5) -> dict:
 
     return{
@@ -112,9 +118,9 @@ def city_dict(name: str, lang: str, output_bucket: str, support_files_bucket: st
                             'cover': 'weekly/support_files/img/cover.png',
                             'heatmap_config' : {'coordinates': coord,
                                                 'zoom_start': zoom,
-                                                '#TopStreetsDisplayed': 5,
-                                                'tiles_list': ["CartoDB dark_matter", "CartoDB positron"],
-                                                'zoom_control': False},
+                                                'bearing': bearing,
+                                                'img_size': (880, 680),
+                                                '#TopStreetsDisplayed': 5,},
                             'datasetsTemplate': 'weekly/support_files/img/datasets.json',                            
                             'mapConfigTemplate': 'weekly/support_files/img/mapConfig.json',
                             'KeplerHTML':  'weekly/support_files/img/kepler.gl.html',

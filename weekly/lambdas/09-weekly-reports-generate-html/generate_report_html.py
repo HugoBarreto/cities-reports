@@ -142,7 +142,15 @@ def generate_alerts_vars(event, bucket, types_alerts, titles, today, report_para
                   lsuffix='_s1', rsuffix='_s2')        
     
     return {alert: (titles[event['lang']][alert], *tables) 
-            for alert, tables in generate_alerts_tables(weeks, types_alerts, report_params).items()}                        
+            for alert, tables in generate_alerts_tables(weeks, types_alerts, report_params).items()}  
+
+def alert_prefix(filename):
+    
+    if 'ACCIDENT' in filename: return 'Accidents/'
+    elif 'POT_HOLE' in filename: return 'PotHoles/'
+    elif 'JAM' in filename: return 'Jams/'
+    elif 'FLOOD' in filename: return 'Floods/'
+    elif 'TRAFFIC_LIGHT' in filename: return 'TrafficLightFault/'
 
 def lambda_handler(event, context):
     
@@ -175,6 +183,13 @@ def lambda_handler(event, context):
     #getting table/img relation    
     images = {alert : "file:///tmp/img/" + alert + '.png' for l in types_alert.values() for alert in l}
     
+    #getting img/link relation
+    base_html = "http://bd-fgv-public.s3.us-east-2.amazonaws.com/"
+    city = event['city'].replace("ã", "a")
+    linkPrefix = '/'.join(map(lambda x: x.zfill(2), 
+                              ['exports/reports/weekly', str(today.year), str(today.month), str(today.day), city])) + '/maps/'
+    mapLinks = {alert : base_html + linkPrefix + alert_prefix(alert) + 'kepler.gl.html' for l in types_alert.values() for alert in l}
+    
     #rendering html templates
     template_vars = {'report_title' : 'weekly report',
                      'CITY' : event['city'],
@@ -188,6 +203,7 @@ def lambda_handler(event, context):
                      'exec_summary': exec_summary,
                      'img_template': img_template,                     
                      'images': images,
+                     'mapLinks': mapLinks,
     }
     
     html_out = report_template.render(template_vars)

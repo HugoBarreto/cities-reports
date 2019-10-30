@@ -6,8 +6,7 @@ lambd = boto3.client('lambda')
 
 def lambda_handler(event, context):
    
-    today = dt.fromtimestamp(event['timestamp'])
-    bucket = event['bucket']
+    today = dt.fromtimestamp(event['timestamp'])    
     prefix = event['prefix']
     
     event['report']['img']['files'] = []

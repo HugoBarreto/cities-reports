@@ -15,10 +15,6 @@ def get_file(bucket, key, read_function=lambda x: x):
     
     return read_function(get_payload(bucket, key))
 
-def filter_alerts(alerts_df, report_params):
-    
-    return alerts_df[alerts_df.cum_share_street < 0.8] if alerts_df.shape[0] > report_params['table_rows']*5 else alerts_df
-
 def lambda_handler(event, context):
     
     bucket = event['bucket']
@@ -45,12 +41,12 @@ def lambda_handler(event, context):
         f.write('const datasets = ' + json.dumps(datasets) + ';')
     
 
-    key =  event['prefix'] + 'datasets.js'
+    key =  event['prefix'] + f"datasets-{event['taks']['alert']}.js"
     s3.upload_file('/tmp/datasets.js', Bucket=bucket, Key=key)
     # s3.upload_file('/tmp/datasets.js', Bucket=bucket, Key='test/datasetsOutput.js')
     event['task']['dataset_key'] = key
     
-    ########### mapConfig.js setup
+    ########### mapConfig.js setup - reduncy, should only do it once, not for every alert; room for improvement
 
     mapConfig = get_file(event['report']['img']['bucket'], 
                     event['report']['img']['mapConfigTemplate'],
@@ -59,6 +55,7 @@ def lambda_handler(event, context):
     mapConfig['config']['mapState']['latitude'] = heatmap_config['coordinates'][0]
     mapConfig['config']['mapState']['longitude'] = heatmap_config['coordinates'][1]
     mapConfig['config']['mapState']['zoom'] = heatmap_config['zoom_start']
+    mapConfig['config']['mapState']['bearing'] = heatmap_config['bearing']
 
     with open('/tmp/mapConfig.js', 'w') as f:
         f.write('const config = ' + json.dumps(mapConfig) + ';')
@@ -68,7 +65,7 @@ def lambda_handler(event, context):
     # s3.upload_file('/tmp/mapConfig.js', Bucket=bucket, Key='test/mapConfigOutput.js')
     event['task']['config_key'] = key
     
-
+    event['task']['KeplerHTML']  = event['report']['img']['KeplerHTML']
 
     lambd.invoke(   
         FunctionName='pngen',
