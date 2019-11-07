@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import * as crossfilter from 'crossfilter2';
-import { csv, timeMonth } from 'd3';
+import { csv, timeMonth, utcHour } from 'd3';
 import 'dc/dc.css';
 
 import { dateUTCFormatParser, dateFormatParser } from './utils';
@@ -19,24 +19,27 @@ export default class DataProvider extends Component {
     }
     this.setState({ loading: true });
     // Generalizar isso aqui
-    // csv('./MirafloresAlertsTest.csv').then(data => {
-    csv('./ndx.csv').then(data => {
+    csv('./MirafloresAlertsTest.csv').then(data => {
+      // csv('./ndx.csv').then(data => {
       data.forEach(d => {
         const entry = d;
-        /* entry.interactions = +d.interactions;
+        entry.interactions = +d.interactions;
         entry.longitude = +d.longitude;
         entry.latitude = +d.latitude;
-        entry.start_time = dateUTCFormatParser(d.start_time);
-        entry.end_time = dateUTCFormatParser(d.end_time);
+        entry.startTime = dateUTCFormatParser(d.start_time);
+        entry.endTime = dateUTCFormatParser(d.end_time);
         entry.reliability = +d.reliability;
         entry.confidence = +d.confidence;
         entry.magvar = +d.magvar;
         entry.duration_min = +d.duration_min;
-        entry. =  */
-        entry.dd = dateFormatParser(entry.date);
+        entry.hours = utcHour.range(
+          utcHour(d.start_time),
+          utcHour.offset(utcHour(d.end_time), 1)
+        );
+        /* entry.dd = dateFormatParser(entry.date);
         entry.month = timeMonth(entry.dd); // pre-calculate month for better performance
         entry.close = +entry.close; // coerce to number
-        entry.open = +entry.open;
+        entry.open = +entry.open; */
       });
 
       this.data = crossfilter(data); // TODO possibly need to update this
