@@ -42,7 +42,7 @@ const WeeklyReport = ({ city, smallStats }) => (
     <Row>
       <SectionTitle title="Jams" className="text-sm-left mb-3" />
     </Row>
-    <Row>
+    <Row className="mb-3">
       <Col sm={{ size: 10, order: 2, offset: 1 }}>
         <Card>
           <CardBody style={{ minHeight: '600px' }}>

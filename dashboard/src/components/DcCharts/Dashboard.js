@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import DataProvider from './DataProvider';
 import { BubbleChart } from './BubbleChart';
 import { GainOrLossChart } from './GainOrLessChart';
-import { QuarterChart } from './QuarterChart';
+import { DirectionChart } from './DirectionChart';
 import { DayOfWeekChart } from './DayOfWeekChart';
 import { HourOfDayChart } from './HourOfDayChart';
 import { FluctuationChart } from './FluctuationChart';
@@ -20,13 +20,24 @@ import { DataTable } from './NasdaqTable';
 export default () => {
   return (
     <DataProvider>
-      <Row>
-        <Col md={12}>
+      <Row className="mb-3">
+        <Col md={4} sm={6}>
+          <Card>
+            <CardBody>
+              <DirectionChart />
+            </CardBody>
+          </Card>
+        </Col>
+        <Col md={4} sm={6}>
           <Card>
             <CardBody>
               <DayOfWeekChart />
             </CardBody>
           </Card>
+        </Col>
+      </Row>
+      <Row className="mb-3">
+        <Col sm={6}>
           <Card>
             <CardBody>
               <HourOfDayChart />
@@ -65,48 +76,3 @@ export default () => {
     </DataProvider>
   );
 };
-
-/* export default () => {
-  return (
-    <Div>
-      <DataProvider>
-        <Row>
-          <Col md={12}>
-            <BubbleChart />
-          </Col>
-        </Row>
-        <Row>
-          <Col md={7}>
-            <Row>
-              <Col md={12}>
-                <MoveChart />
-              </Col>
-            </Row>
-            <Row>
-              <Col md={6}>
-                <GainOrLossChart />
-              </Col>
-              <Col md={6}>
-                <FluctuationChart />
-              </Col>
-
-              <Col md={6}>
-                <QuarterChart />
-              </Col>
-              <Col md={6}>
-                <DayOfWeekChart />
-              </Col>
-            </Row>
-          </Col>
-          <Col
-            md={5}
-            style={{ overflowY: 'scroll', maxHeight: '70vh', width: '100%' }}
-          >
-            <DataTable />
-          </Col>
-        </Row>
-      </DataProvider>
-    </Div>
-  );
-};
- */

@@ -19,7 +19,7 @@ export default class DataProvider extends Component {
     }
     this.setState({ loading: true });
     // Generalizar isso aqui
-    csv('./MirafloresAlertsTest.csv').then(data => {
+    csv('./MirafloresAlerts.csv').then(data => {
       // csv('./ndx.csv').then(data => {
       data.forEach(d => {
         const entry = d;

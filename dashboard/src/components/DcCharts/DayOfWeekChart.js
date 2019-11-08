@@ -12,7 +12,11 @@ const dayOfWeekFunc = (divRef, data) => {
   });
   const group = dimension.group();
 
-  dayOfWeekChart.dimension(dimension).group(group);
+  dayOfWeekChart
+    .dimension(dimension)
+    .group(group)
+    .ordering(dc.pluck('key'))
+    .label(({ key }) => key.slice(2, key.length + 1));
 
   return dayOfWeekChart;
 };

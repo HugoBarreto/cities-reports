@@ -9,3 +9,7 @@ export const dateUTCFormat = utcFormat(dateUTCFormatSpecifier);
 export const dateUTCFormatParser = utcParse(dateUTCFormatSpecifier);
 
 export const numberFormat = format('.2f');
+
+export function last(array) {
+  return array[array.length - 1];
+}
