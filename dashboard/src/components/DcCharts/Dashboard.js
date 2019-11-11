@@ -8,6 +8,7 @@ import { GainOrLossChart } from './GainOrLessChart';
 import { DirectionChart } from './DirectionChart';
 import { DayOfWeekChart } from './DayOfWeekChart';
 import { HourOfDayChart } from './HourOfDayChart';
+import { InteractionLineChart } from './InteractionLineChart';
 import { FluctuationChart } from './FluctuationChart';
 import { MoveChart } from './MoveChart';
 import { DataTable } from './NasdaqTable';
@@ -21,10 +22,10 @@ export default () => {
   return (
     <DataProvider>
       <Row className="mb-3">
-        <Col md={4} sm={6}>
+        <Col sm={8}>
           <Card>
             <CardBody>
-              <DirectionChart />
+              <InteractionLineChart />
             </CardBody>
           </Card>
         </Col>

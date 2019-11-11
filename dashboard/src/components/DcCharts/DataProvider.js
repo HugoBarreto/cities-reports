@@ -33,8 +33,8 @@ export default class DataProvider extends Component {
         entry.magvar = +d.magvar;
         entry.duration_min = +d.duration_min;
         entry.hours = utcHour.range(
-          utcHour(d.start_time),
-          utcHour.offset(utcHour(d.end_time), 1)
+          utcHour(d.startTime),
+          utcHour.offset(utcHour(d.endTime), 1)
         );
         /* entry.dd = dateFormatParser(entry.date);
         entry.month = timeMonth(entry.dd); // pre-calculate month for better performance
