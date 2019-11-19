@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
-import * as crossfilter from 'crossfilter2';
-import { csv, timeMonth, utcHour } from 'd3';
+import crossfilter from 'crossfilter2';
+import { csv, utcHour } from 'd3';
 import 'dc/dc.css';
 
-import { dateUTCFormatParser, dateFormatParser } from './utils';
-import DataContext from './DataContext';
+import { dateUTCFormatParser } from '../../utils';
 
-export default class DataProvider extends Component {
+export const DataContext = React.createContext({ data: {} });
+
+export class DataProvider extends Component {
   constructor(props) {
     super(props);
     this.state = { loading: false, hasData: false };
@@ -40,6 +41,7 @@ export default class DataProvider extends Component {
         entry.month = timeMonth(entry.dd); // pre-calculate month for better performance
         entry.close = +entry.close; // coerce to number
         entry.open = +entry.open; */
+        entry.kepler = Object.values(entry);
       });
 
       this.data = crossfilter(data); // TODO possibly need to update this

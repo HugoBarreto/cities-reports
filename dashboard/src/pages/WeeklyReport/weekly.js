@@ -7,7 +7,7 @@ import PageTitle from '../../components/PageTitle';
 import SmallStats from '../../components/SmallStats';
 import SectionTitle from '../../components/SectionTitle';
 import KeplerMap from '../../components/KeplerMap';
-import Dashboard from '../../components/DcCharts/Dashboard';
+import DcCharts from '../../components/DcCharts';
 
 const WeeklyReport = ({ city, smallStats }) => (
   <Container fluid className="main-content-container px-4">
@@ -52,7 +52,7 @@ const WeeklyReport = ({ city, smallStats }) => (
       </Col>
     </Row>
 
-    <Dashboard />
+    <DcCharts />
   </Container>
 );
 

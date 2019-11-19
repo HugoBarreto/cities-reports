@@ -6,7 +6,7 @@
     "bootstrap": "^4.3.1",
     "chart.js": "^2.8.0",
     "classnames": "^2.2.6",
-    "crossfilter2": "^1.4.7",
+    "crossfilter2": "^1.5.0",
     "d3": "^5.12.0",
     "dc": "^3.1.7",
     "hoist-non-react-statics": "^3.3.0",

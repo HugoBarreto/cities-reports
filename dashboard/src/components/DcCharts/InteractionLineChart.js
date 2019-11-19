@@ -2,7 +2,7 @@ import React from 'react';
 import * as dc from 'dc';
 import { scaleTime, utcHour, utcHours } from 'd3';
 
-import { dateFormat, numberFormat } from './utils';
+import { dateFormat, numberFormat } from '../../utils';
 import { ChartTemplate } from './ChartTemplate';
 
 /* const reducerAdd = (point, v) => {

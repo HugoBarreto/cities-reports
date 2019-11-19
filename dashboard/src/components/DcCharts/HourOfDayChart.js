@@ -6,9 +6,10 @@ import { ChartTemplate } from './ChartTemplate';
 
 const hourOfDayFunc = (divRef, data) => {
   const hourOfDayChart = dc.barChart(divRef);
-  const dimension = data.dimension(d => {
-    return `${d.startTime.getHours()}`;
-  });
+  const dimension = data.dimension(
+    d => d.hours.map(date => date.getHours()),
+    true
+  );
   const group = dimension.group();
 
   hourOfDayChart
@@ -28,5 +29,5 @@ const hourOfDayFunc = (divRef, data) => {
 };
 
 export const HourOfDayChart = () => (
-  <ChartTemplate chartFunction={hourOfDayFunc} title="Alerts by Hour" />
+  <ChartTemplate chartFunction={hourOfDayFunc} title="Active Alerts by Hour" />
 );

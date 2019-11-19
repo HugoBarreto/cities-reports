@@ -1,44 +1,30 @@
 import React, { useState, useContext, useRef, useEffect } from 'react';
 import * as dc from 'dc';
+import { Row, Col, Card, CardHeader, CardBody, CardTitle } from 'shards-react';
 import styled from 'styled-components';
 
-import DataContext from './DataContext';
-
-const Span = styled.span`
-  padding: 4px;
-  display: inline;
-  cursor: pointer;
-  float: right;
-  &:hover: {
-    background: '#ddd';
-  }
-`;
+import { DataContext } from '../DataContext';
+import { ResetButton } from './ResetButton';
 
 const Div = styled.div`
     width: 100%;
     height: auto;
     box-sizing: border-box;
-    padding: 10px,
+    padding: 5px,
     & label: {
       textTransform: 'capitalize',
       textDecoration: 'underline',
     }
 `;
 
-const ResetButton = ({ chart }) => {
-  return (
-    <Span
-      onClick={() => {
-        chart.filterAll();
-        dc.redrawAll();
-      }}
-    >
-      reset
-    </Span>
-  );
-};
-
-export const ChartTemplate = ({ chartFunction, title, className }) => {
+export const ChartTemplate = ({
+  chartFunction,
+  title,
+  className = '',
+  titleClassName = '',
+  resetClassName = 'd-flex ml-auto',
+  resetText = 'Reset',
+}) => {
   /*
     We render the dc chart using an effect. We want to pass the chart as a prop
     after the dc call, but there is nothing by default to trigger a re-render and
@@ -54,14 +40,32 @@ export const ChartTemplate = ({ chartFunction, title, className }) => {
     // chartfunction takes the ref and does something with it
     const newChart = chartFunction(div.current, data);
 
+    newChart.on('filtered', () =>
+      console.log(`filtered chart ${newChart.chartID()}`)
+    );
     newChart.render();
     updateChart(newChart);
   }, 1);
 
   return (
-    <Div ref={div} className={className}>
-      <ResetButton chart={chart} />
-      <label>{title}</label>
-    </Div>
+    <Card>
+      <CardHeader className="border-bottom">
+        <Row className="align-items-center">
+          <Col>
+            <CardTitle className={titleClassName}>{title}</CardTitle>
+          </Col>
+          <Col>
+            <ResetButton
+              chart={chart}
+              text={resetText}
+              className={resetClassName}
+            />
+          </Col>
+        </Row>
+      </CardHeader>
+      <CardBody className="">
+        <Div ref={div} className={className} />
+      </CardBody>
+    </Card>
   );
 };

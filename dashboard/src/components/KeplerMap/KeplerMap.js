@@ -10,7 +10,8 @@ const MAPBOX_TOKEN = process.env.MapboxAccessToken; // eslint-disable-line
 
 class KeplerMap extends Component {
   componentDidMount() {
-    this.props.dispatch(
+    const { dispatch } = this.props;
+    dispatch(
       wrapTo(
         // this.props.id,
         'map',

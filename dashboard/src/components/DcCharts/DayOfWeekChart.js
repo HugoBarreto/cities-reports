@@ -7,10 +7,14 @@ const dayOfWeekFunc = (divRef, data) => {
   const dayOfWeekChart = dc.rowChart(divRef);
 
   const dimension = data.dimension(d => {
-    const day = d.startTime.getDay();
+    const startDay = d.startTime.getDay();
+    const endDay = d.endTime.getDay();
     const name = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-    return `${day}.${name[day]}`;
-  });
+    if (startDay === endDay) {
+      return [`${startDay}.${name[startDay]}`];
+    }
+    return [`${startDay}.${name[startDay]}`, `${endDay}.${name[endDay]}`];
+  }, true);
   const group = dimension.group();
 
   dayOfWeekChart

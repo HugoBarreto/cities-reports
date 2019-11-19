@@ -1,17 +1,12 @@
 import React from 'react';
 import { Row, Col, Card, CardBody } from 'shards-react';
-import styled from 'styled-components';
+// import styled from 'styled-components';
 
-import DataProvider from './DataProvider';
-import { BubbleChart } from './BubbleChart';
-import { GainOrLossChart } from './GainOrLessChart';
-import { DirectionChart } from './DirectionChart';
+import { DataProvider } from '../DataContext';
+import { DisplayTotalAlerts } from './DisplayTotalAlerts';
 import { DayOfWeekChart } from './DayOfWeekChart';
 import { HourOfDayChart } from './HourOfDayChart';
 import { InteractionLineChart } from './InteractionLineChart';
-import { FluctuationChart } from './FluctuationChart';
-import { MoveChart } from './MoveChart';
-import { DataTable } from './NasdaqTable';
 
 // const Div = styled.div`
 //   padding: 1rem;
@@ -22,28 +17,19 @@ export default () => {
   return (
     <DataProvider>
       <Row className="mb-3">
-        <Col sm={8}>
-          <Card>
-            <CardBody>
-              <InteractionLineChart />
-            </CardBody>
-          </Card>
+        <Col md={2} sm={4}>
+          <DisplayTotalAlerts />
         </Col>
-        <Col md={4} sm={6}>
-          <Card>
-            <CardBody>
-              <DayOfWeekChart />
-            </CardBody>
-          </Card>
+        <Col md={4} sm={8}>
+          <DayOfWeekChart />
+        </Col>
+        <Col md={6} sm={12}>
+          <HourOfDayChart />
         </Col>
       </Row>
       <Row className="mb-3">
-        <Col sm={6}>
-          <Card>
-            <CardBody>
-              <HourOfDayChart />
-            </CardBody>
-          </Card>
+        <Col md={8} sm={12}>
+          <InteractionLineChart />
         </Col>
       </Row>
       {/* <Row>
