@@ -1,10 +1,13 @@
 import React, { useState, useContext, useRef, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import * as dc from 'dc';
+import { addDataToMap, wrapTo } from 'kepler.gl/actions';
 import { Row, Col, Card, CardHeader, CardBody, CardTitle } from 'shards-react';
 import styled from 'styled-components';
 
 import { DataContext } from '../DataContext';
 import { ResetButton } from './ResetButton';
+import dataTemplate from '../../data/kepler-data-template';
 
 const Div = styled.div`
     width: 100%;
@@ -34,15 +37,30 @@ export const ChartTemplate = ({
     */
   const [chart, updateChart] = useState(null);
   const { data } = useContext(DataContext);
+  const dispatch = useDispatch();
   const div = useRef(null);
 
   useEffect(() => {
     // chartfunction takes the ref and does something with it
     const newChart = chartFunction(div.current, data);
 
-    newChart.on('filtered', () =>
-      console.log(`filtered chart ${newChart.chartID()}`)
-    );
+    newChart.on('filtered', () => {
+      console.log(`filtered chart ${newChart.chartID()}`);
+      dataTemplate.data.rows = data.allFiltered().map(d => d.kepler);
+
+      dispatch(
+        wrapTo(
+          // this.props.id,
+          'map',
+          addDataToMap({
+            datasets: dataTemplate,
+            options: {
+              centerMap: true,
+            },
+          })
+        )
+      );
+    });
     newChart.render();
     updateChart(newChart);
   }, 1);

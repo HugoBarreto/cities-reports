@@ -33,15 +33,11 @@ export class DataProvider extends Component {
         entry.confidence = +d.confidence;
         entry.magvar = +d.magvar;
         entry.duration_min = +d.duration_min;
+        entry.kepler = Object.values(entry);
         entry.hours = utcHour.range(
           utcHour(d.startTime),
           utcHour.offset(utcHour(d.endTime), 1)
         );
-        /* entry.dd = dateFormatParser(entry.date);
-        entry.month = timeMonth(entry.dd); // pre-calculate month for better performance
-        entry.close = +entry.close; // coerce to number
-        entry.open = +entry.open; */
-        entry.kepler = Object.values(entry);
       });
 
       this.data = crossfilter(data); // TODO possibly need to update this

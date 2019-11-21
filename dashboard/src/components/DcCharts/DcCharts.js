@@ -2,11 +2,11 @@ import React from 'react';
 import { Row, Col, Card, CardBody } from 'shards-react';
 // import styled from 'styled-components';
 
-import { DataProvider } from '../DataContext';
 import { DisplayTotalAlerts } from './DisplayTotalAlerts';
 import { DayOfWeekChart } from './DayOfWeekChart';
 import { HourOfDayChart } from './HourOfDayChart';
 import { InteractionLineChart } from './InteractionLineChart';
+import KeplerAlerts from './KeplerAlerts';
 
 // const Div = styled.div`
 //   padding: 1rem;
@@ -15,7 +15,7 @@ import { InteractionLineChart } from './InteractionLineChart';
 
 export default () => {
   return (
-    <DataProvider>
+    <>
       <Row className="mb-3">
         <Col md={2} sm={4}>
           <DisplayTotalAlerts />
@@ -30,6 +30,15 @@ export default () => {
       <Row className="mb-3">
         <Col md={8} sm={12}>
           <InteractionLineChart />
+        </Col>
+      </Row>
+      <Row className="mb-3">
+        <Col sm={{ size: 10, order: 2, offset: 1 }}>
+          <Card>
+            <CardBody style={{ minHeight: '600px' }}>
+              <KeplerAlerts id="map" />
+            </CardBody>
+          </Card>
         </Col>
       </Row>
       {/* <Row>
@@ -60,6 +69,6 @@ export default () => {
           <DataTable />
         </Col>
       </Row> */}
-    </DataProvider>
+    </>
   );
 };
