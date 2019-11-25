@@ -1,51 +1,36 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Container, Row, Col, Card, CardBody } from 'shards-react';
+import { Container, Row, Col } from 'shards-react';
 
 // import { Container } from './styles';
 import PageTitle from '../../components/PageTitle';
 import SmallStats from '../../components/SmallStats';
 import SectionTitle from '../../components/SectionTitle';
-import KeplerMap from '../../components/KeplerMap';
 import DcCharts from '../../components/DcCharts';
 
-const WeeklyReport = ({ city, smallStats }) => (
-  <Container fluid className="main-content-container px-4">
-    {/* Page Header */}
-    <Row noGutters className="page-header py-4">
-      <PageTitle
-        title={city}
-        subtitle="Weekly Report"
-        className="text-sm-left mb-3"
-      />
-    </Row>
+const WeeklyReport = ({ city, smallStats }) => {
+  return (
+    <Container fluid className="main-content-container px-4">
+      {/* Page Header */}
+      <Row noGutters className="page-header py-4">
+        <PageTitle
+          title={city}
+          subtitle="Weekly Report"
+          className="text-sm-left mb-3"
+        />
+      </Row>
 
-    {/* Small Stats Blocks */}
-    <Row>
-      {smallStats.map((stats, idx) => (
-        <Col className="col-lg mb-4" key={idx} {...stats.attrs}>
-          <SmallStats
-            id={`small-stats-${idx}`}
-            variation="1"
-            chartData={stats.datasets}
-            chartLabels={stats.chartLabels}
-            label={stats.label}
-            value={stats.value}
-            percentage={stats.percentage}
-            increase={stats.increase}
-            decrease={stats.decrease}
-          />
-        </Col>
-      ))}
-    </Row>
+      {/* Small Stats Blocks */}
+      <SmallStats />
 
-    <Row>
-      <SectionTitle title="Jams" className="text-sm-left mb-3" />
-    </Row>
+      <Row>
+        <SectionTitle title="Jams" className="text-sm-left mb-3" />
+      </Row>
 
-    <DcCharts />
-  </Container>
-);
+      <DcCharts />
+    </Container>
+  );
+};
 
 WeeklyReport.propTypes = {
   /**

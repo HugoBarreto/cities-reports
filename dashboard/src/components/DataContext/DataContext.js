@@ -3,7 +3,7 @@ import crossfilter from 'crossfilter2';
 import { csv, utcHour } from 'd3';
 import 'dc/dc.css';
 
-import { dateUTCFormatParser } from '../../utils';
+import { dateUTCFormatParser, parseAlertTypeSubtype } from '../../utils';
 
 export const DataContext = React.createContext({ data: {} });
 
@@ -24,6 +24,7 @@ export class DataProvider extends Component {
       // csv('./ndx.csv').then(data => {
       data.forEach(d => {
         const entry = d;
+        entry.alertType = parseAlertTypeSubtype(d.type, d.subtype);
         entry.interactions = +d.interactions;
         entry.longitude = +d.longitude;
         entry.latitude = +d.latitude;

@@ -45,9 +45,7 @@ export const ChartTemplate = ({
     const newChart = chartFunction(div.current, data);
 
     newChart.on('filtered', () => {
-      console.log(`filtered chart ${newChart.chartID()}`);
       dataTemplate.data.rows = data.allFiltered().map(d => d.kepler);
-
       dispatch(
         wrapTo(
           // this.props.id,
@@ -63,7 +61,7 @@ export const ChartTemplate = ({
     });
     newChart.render();
     updateChart(newChart);
-  }, 1);
+  }, []);
 
   return (
     <Card>
