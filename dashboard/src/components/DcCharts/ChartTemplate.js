@@ -67,7 +67,7 @@ export const ChartTemplate = ({
     <Card>
       <CardHeader className="border-bottom">
         <Row className="align-items-center">
-          <Col>
+          <Col xs={8}>
             <CardTitle className={titleClassName}>{title}</CardTitle>
           </Col>
           <Col>

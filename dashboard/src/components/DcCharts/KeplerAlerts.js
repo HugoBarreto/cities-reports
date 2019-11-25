@@ -1,6 +1,7 @@
 import React, { Component, useContext } from 'react';
 import { connect } from 'react-redux';
 import { addDataToMap, wrapTo } from 'kepler.gl/actions';
+import { Card, CardBody } from 'shards-react';
 // import styled from 'styled-components';
 
 import { DataContext } from '../DataContext';
@@ -32,7 +33,13 @@ class KeplerAlerts extends Component {
 
   render() {
     const { id } = this.props;
-    return <KeplerMap id={id} />;
+    return (
+      <Card>
+        <CardBody style={{ minHeight: '600px' }}>
+          <KeplerMap id={id} />
+        </CardBody>
+      </Card>
+    );
   }
 }
 

@@ -19,7 +19,7 @@ const SmallStats = ({ smallStats }) => {
   // We want to define dimesion only once, then keep it
   useEffect(() => {
     setDimension(data.dimension(d => d.alertType));
-  }, []);
+  }, [data]);
 
   // Get the alertTypes when dimesion is defined
   useEffect(() => {
@@ -80,8 +80,9 @@ const SmallStats = ({ smallStats }) => {
                 <Button
                   key={alert}
                   theme="info"
-                  size="lg"
-                  className="d-flex mx-auto mt-2"
+                  // size="lg"
+                  block
+                  className="mt-2"
                   active={!!filters.includes(alert)}
                   onClick={() => {
                     if (filters.includes(alert)) {
@@ -91,7 +92,7 @@ const SmallStats = ({ smallStats }) => {
                     }
                   }}
                 >
-                  Filter
+                  <span style={{ 'font-size': 'larger' }}>Filter</span>
                 </Button>
               </Col>
             );

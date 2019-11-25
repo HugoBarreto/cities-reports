@@ -12,7 +12,7 @@ const WeeklyReport = ({ city, smallStats }) => {
   return (
     <Container fluid className="main-content-container px-4">
       {/* Page Header */}
-      <Row noGutters className="page-header py-4">
+      <Row noGutters className="page-header py-3">
         <PageTitle
           title={city}
           subtitle="Weekly Report"
@@ -22,10 +22,10 @@ const WeeklyReport = ({ city, smallStats }) => {
 
       {/* Small Stats Blocks */}
       <SmallStats />
-
+      {/*
       <Row>
         <SectionTitle title="Jams" className="text-sm-left mb-3" />
-      </Row>
+      </Row> */}
 
       <DcCharts />
     </Container>
