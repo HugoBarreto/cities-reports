@@ -1,10 +1,28 @@
 import { createStore, applyMiddleware, compose } from 'redux';
 import { taskMiddleware } from 'react-palm/tasks';
-import rootReducer from './modules/rootReducer';
+import createSagaMiddleware from 'redux-saga';
 
-const middlewares = [taskMiddleware];
-const enhancers = [applyMiddleware(...middlewares)];
+import rootReducer from './modules/rootReducer';
+import rootSaga from './modules/rootSaga';
+
+const sagaMonitor =
+  process.env.NODE_ENV === 'development'
+    ? console.tron.createSagaMonitor()
+    : null;
+
+const sagaMiddleware = createSagaMiddleware({ sagaMonitor });
+
+const middlewares = [taskMiddleware, sagaMiddleware];
+const enhancers =
+  process.env.NODE_ENV === 'development'
+    ? [console.tron.createEnhancer(), applyMiddleware(...middlewares)]
+    : [applyMiddleware(...middlewares)];
 
 const initialState = {};
 
-export default createStore(rootReducer, initialState, compose(...enhancers));
+const store = createStore(rootReducer, initialState, compose(...enhancers));
+
+sagaMiddleware.run(rootSaga);
+
+export { default as Constants } from './constants';
+export default store;
