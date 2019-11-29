@@ -35,7 +35,7 @@ function MainSidebar({ menuVisible, items, hideLogoText }) {
   );
 
   return (
-    <Col tag="aside" className={classes} lg={{ size: 2 }} md={{ size: 3 }}>
+    <Col tag="aside" className={classes} md={{ size: 2 }}>
       <SidebarMainNavbar
         hideLogoText={hideLogoText}
         dispatchAction={reduxHandler}

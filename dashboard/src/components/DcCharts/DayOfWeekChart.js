@@ -22,7 +22,10 @@ const dayOfWeekFunc = ({ div, data }) => {
     .dimension(dimension)
     .group(group)
     .ordering(dc.pluck('key'))
-    .label(({ key }) => key.slice(2, key.length + 1));
+    .elasticX(true)
+    .label(({ key }) => key.slice(2, key.length + 1))
+    .xAxis()
+    .ticks(5);
 
   return dayOfWeekChart;
 };

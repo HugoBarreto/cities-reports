@@ -1,6 +1,6 @@
 import React from 'react';
 import * as dc from 'dc';
-import { scaleBand } from 'd3';
+import { scaleOrdinal } from 'd3';
 import PropTypes from 'prop-types';
 
 import ChartTemplate from './ChartTemplate';
@@ -16,13 +16,21 @@ const hourOfDayFunc = ({ div, data }) => {
   hourOfDayChart
     .dimension(dimension)
     .group(group)
-    .gap(1)
-    .x(scaleBand())
+    .gap(2)
+    .x(scaleOrdinal())
     .xUnits(dc.units.ordinal)
     .height(250)
     .renderHorizontalGridLines(true)
+    .elasticY(true)
     .yAxisLabel('Total Alerts')
     .xAxisLabel('Hour');
+
+  const ticks = group.all().map((g, i) => (!(i % 2) ? g.key : null));
+
+  hourOfDayChart
+    .xAxis()
+    .tickValues(ticks)
+    .tickSizeOuter(0);
 
   hourOfDayChart.yAxis().ticks(5);
 

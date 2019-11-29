@@ -16,9 +16,9 @@ import KeplerAlerts from './KeplerAlerts';
 const DcCharts = ({ keplerId, reduxHandler }) => {
   return (
     <>
-      <Row className="mb-2 equal">
+      <Row className="mb-3">
         <Col sm={12} md={8} className="px-2">
-          <Row className="mb-3">
+          <Row style={{ height: '100%' }}>
             <Col sm={12}>
               <KeplerAlerts id={keplerId} reduxHandler={reduxHandler} />
             </Col>
@@ -30,7 +30,7 @@ const DcCharts = ({ keplerId, reduxHandler }) => {
               <DayOfWeekChart reduxHandler={reduxHandler} />
             </Col>
           </Row>
-          <Row className="mb-3">
+          <Row>
             <Col sm={12}>
               <HourOfDayChart reduxHandler={reduxHandler} />
             </Col>

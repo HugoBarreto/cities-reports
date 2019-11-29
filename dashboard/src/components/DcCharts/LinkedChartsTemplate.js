@@ -38,11 +38,16 @@ const ChartTemplate = ({
 
   const [chart, updateChart] = useState(null);
   const { data } = useContext(DataContext);
-  const div = useRef(null);
+  const div1 = useRef(null);
+  const div2 = useRef(null);
 
   useEffect(() => {
     // chartfunction takes the ref and does something with it
-    const newChart = chartFunction({ div: div.current, data });
+    const [newChart, secondChart] = chartFunction({
+      div1: div1.current,
+      div2: div2.current,
+      data,
+    });
 
     newChart.on('filtered', () => {
       dataTemplate.data.rows = data.allFiltered().map(d => d.kepler);
@@ -53,7 +58,10 @@ const ChartTemplate = ({
         },
       });
     });
+
     newChart.render();
+    secondChart.render();
+
     updateChart(newChart);
   }, []);
 
@@ -74,7 +82,8 @@ const ChartTemplate = ({
         </Row>
       </CardHeader>
       <CardBody className={className}>
-        <Div ref={div} />
+        <Div ref={div2} />
+        <Div ref={div1} />
       </CardBody>
     </Card>
   );

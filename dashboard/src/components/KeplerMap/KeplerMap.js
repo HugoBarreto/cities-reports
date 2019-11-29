@@ -8,8 +8,8 @@ const MAPBOX_TOKEN = process.env.MapboxAccessToken; // eslint-disable-line
 
 const KeplerMap = ({ id }) => {
   return (
-    <Card>
-      <CardBody style={{ minHeight: '600px' }}>
+    <Card className="h-100">
+      <CardBody style={{ minHeight: '660px' }}>
         <AutoSizer>
           {({ height, width }) => (
             <KeplerGl
