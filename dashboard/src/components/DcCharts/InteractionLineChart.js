@@ -1,36 +1,14 @@
 import React from 'react';
 import * as dc from 'dc';
+import PropTypes from 'prop-types';
 import { scaleTime, utcHour, utcHours } from 'd3';
 
-import { dateFormat, numberFormat } from '../../utils';
-import { ChartTemplate } from './ChartTemplate';
+import ChartTemplate from './ChartTemplate';
 
-/* const reducerAdd = (point, v) => {
-  const p = point;
-  p.days += 1;
-  p.total += (v.open + v.close) / 2;
-  p.avg = Math.round(p.total / p.days);
-  return p;
-};
-
-const reducerRemove = (point, v) => {
-  const p = point;
-  p.days -= 1;
-  p.total -= (v.open + v.close) / 2;
-  p.avg = p.days ? Math.round(p.total / p.days) : 0;
-  return p;
-};
-
-const reducerInitial = () => ({ days: 0, total: 0, avg: 0 }); */
-
-const moveChartFunc = (divRef, data) => {
-  const lineChart = dc.lineChart(divRef);
-
+const moveChartFunc = ({ div, data }) => {
+  const lineChart = dc.lineChart(div);
   const dimension = data.dimension(d => d.hours, true);
-
   const interactionsGroup = dimension.group().reduceSum(d => d.interactions);
-  const alertsGroup = dimension.group();
-  // .reduce(reducerAdd, reducerRemove, reducerInitial);
 
   lineChart
     .dimension(dimension)
@@ -62,9 +40,16 @@ const moveChartFunc = (divRef, data) => {
   return lineChart;
 };
 
-export const InteractionLineChart = () => (
+const InteractionLineChart = ({ reduxHandler }) => (
   <ChartTemplate
     chartFunction={moveChartFunc}
     title="Hourly Alert Interactions"
+    reduxHandler={reduxHandler}
   />
 );
+
+InteractionLineChart.propTypes = {
+  reduxHandler: PropTypes.func.isRequired,
+};
+
+export default InteractionLineChart;

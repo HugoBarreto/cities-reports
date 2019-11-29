@@ -8,13 +8,13 @@ import { Row, Col, Button } from 'shards-react';
 import { DataContext } from '../DataContext';
 import SmallStat from './SmallStat';
 import dataTemplate from '../../data/kepler-data-template';
+import REDUX_ENUMS from '../../store/constants';
 
-const SmallStats = ({ smallStats }) => {
+const SmallStats = ({ smallStats, reduxHandler }) => {
   const [filters, setFilters] = useState([]);
   const [dimension, setDimension] = useState(null);
   const [alertTypes, setAlertTypes] = useState([]);
   const { data } = useContext(DataContext);
-  const dispatch = useDispatch();
 
   // We want to define dimesion only once, then keep it
   useEffect(() => {
@@ -34,25 +34,19 @@ const SmallStats = ({ smallStats }) => {
         dimension.filterAll();
       }
       dataTemplate.data.rows = data.allFiltered().map(d => d.kepler);
-      dispatch(
-        wrapTo(
-          // this.props.id,
-          'map',
-          addDataToMap({
-            datasets: dataTemplate,
-            options: {
-              centerMap: true,
-            },
-          })
-        )
-      );
+      reduxHandler(REDUX_ENUMS.SMALL_STATS_FILTER_KEPLER_DATA, {
+        datasets: dataTemplate,
+        options: {
+          centerMap: true,
+        },
+      });
       redrawAll();
       return () => {
         dimension.filterAll();
       };
     }
     return () => {};
-  });
+  }, [filters]);
 
   return (
     <>
@@ -103,7 +97,28 @@ const SmallStats = ({ smallStats }) => {
 };
 
 SmallStats.propTypes = {
-  smallStats: PropTypes.array,
+  smallStats: PropTypes.arrayOf(
+    PropTypes.shape({
+      label: PropTypes.string,
+      value: PropTypes.string,
+      percentage: PropTypes.string,
+      increase: PropTypes.bool,
+      decrease: PropTypes.bool,
+      chartLabels: PropTypes.arrayOf(PropTypes.string),
+      attrs: PropTypes.objectOf(PropTypes.string),
+      datasets: PropTypes.arrayOf(
+        PropTypes.shape({
+          label: PropTypes.string,
+          fill: PropTypes.string,
+          borderWidth: PropTypes.number,
+          backgroundColor: PropTypes.string,
+          borderColor: PropTypes.string,
+          data: PropTypes.arrayOf(PropTypes.number),
+        })
+      ),
+    })
+  ),
+  reduxHandler: PropTypes.func.isRequired,
 };
 
 SmallStats.defaultProps = {

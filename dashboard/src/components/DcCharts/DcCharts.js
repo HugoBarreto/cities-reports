@@ -1,11 +1,11 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Row, Col } from 'shards-react';
 // import styled from 'styled-components';
 
-import { DisplayTotalAlerts } from './DisplayTotalAlerts';
-import { DayOfWeekChart } from './DayOfWeekChart';
-import { HourOfDayChart } from './HourOfDayChart';
-import { InteractionLineChart } from './InteractionLineChart';
+import DayOfWeekChart from './DayOfWeekChart';
+import HourOfDayChart from './HourOfDayChart';
+import InteractionLineChart from './InteractionLineChart';
 import KeplerAlerts from './KeplerAlerts';
 
 // const Div = styled.div`
@@ -13,33 +13,33 @@ import KeplerAlerts from './KeplerAlerts';
 //   margin-top: 2rem;
 // `;
 
-export default () => {
+const DcCharts = ({ keplerId, reduxHandler }) => {
   return (
     <>
       <Row className="mb-2 equal">
         <Col sm={12} md={8} className="px-2">
           <Row className="mb-3">
             <Col sm={12}>
-              <KeplerAlerts id="map" />
+              <KeplerAlerts id={keplerId} reduxHandler={reduxHandler} />
             </Col>
           </Row>
         </Col>
         <Col md={4} sm={12} className="px-2">
           <Row className="mb-3">
             <Col sm={12}>
-              <DayOfWeekChart />
+              <DayOfWeekChart reduxHandler={reduxHandler} />
             </Col>
           </Row>
           <Row className="mb-3">
             <Col sm={12}>
-              <HourOfDayChart />
+              <HourOfDayChart reduxHandler={reduxHandler} />
             </Col>
           </Row>
         </Col>
       </Row>
       <Row className="mb-3">
         <Col sm={12}>
-          <InteractionLineChart />
+          <InteractionLineChart reduxHandler={reduxHandler} />
         </Col>
       </Row>
       <Row className="mb-3" />
@@ -74,3 +74,10 @@ export default () => {
     </>
   );
 };
+
+DcCharts.propTypes = {
+  keplerId: PropTypes.string.isRequired,
+  reduxHandler: PropTypes.func.isRequired,
+};
+
+export default DcCharts;

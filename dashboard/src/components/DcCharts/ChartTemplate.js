@@ -1,32 +1,32 @@
 import React, { useState, useContext, useRef, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import * as dc from 'dc';
-import { addDataToMap, wrapTo } from 'kepler.gl/actions';
+import PropTypes from 'prop-types';
 import { Row, Col, Card, CardHeader, CardBody, CardTitle } from 'shards-react';
 import styled from 'styled-components';
 
 import { DataContext } from '../DataContext';
 import { ResetButton } from './ResetButton';
 import dataTemplate from '../../data/kepler-data-template';
+import REDUX_ENUMS from '../../store/constants';
 
 const Div = styled.div`
     width: 100%;
     height: auto;
     box-sizing: border-box;
-    padding: 5px,
+    padding: 5px;
     & label: {
       textTransform: 'capitalize',
       textDecoration: 'underline',
     }
 `;
 
-export const ChartTemplate = ({
+const ChartTemplate = ({
   chartFunction,
   title,
-  className = '',
-  titleClassName = '',
-  resetClassName = 'd-flex ml-auto',
-  resetText = 'Reset',
+  reduxHandler,
+  className,
+  titleClassName,
+  resetClassName,
+  resetText,
 }) => {
   /*
     We render the dc chart using an effect. We want to pass the chart as a prop
@@ -35,29 +35,23 @@ export const ChartTemplate = ({
     To solve this, we hold a state key and increment it after the effect ran.
     By passing the key to the parent div, we get a rerender once the chart is defined.
     */
+
   const [chart, updateChart] = useState(null);
   const { data } = useContext(DataContext);
-  const dispatch = useDispatch();
   const div = useRef(null);
 
   useEffect(() => {
     // chartfunction takes the ref and does something with it
-    const newChart = chartFunction(div.current, data);
+    const newChart = chartFunction({ div: div.current, data });
 
     newChart.on('filtered', () => {
       dataTemplate.data.rows = data.allFiltered().map(d => d.kepler);
-      dispatch(
-        wrapTo(
-          // this.props.id,
-          'map',
-          addDataToMap({
-            datasets: dataTemplate,
-            options: {
-              centerMap: true,
-            },
-          })
-        )
-      );
+      return reduxHandler(REDUX_ENUMS.DC_CHART_FILTER_KEPLER_DATA, {
+        datasets: dataTemplate,
+        options: {
+          centerMap: true,
+        },
+      });
     });
     newChart.render();
     updateChart(newChart);
@@ -85,3 +79,22 @@ export const ChartTemplate = ({
     </Card>
   );
 };
+
+ChartTemplate.propTypes = {
+  chartFunction: PropTypes.func.isRequired,
+  title: PropTypes.string.isRequired,
+  reduxHandler: PropTypes.func.isRequired,
+  className: PropTypes.string,
+  titleClassName: PropTypes.string,
+  resetClassName: PropTypes.string,
+  resetText: PropTypes.string,
+};
+
+ChartTemplate.defaultProps = {
+  className: '',
+  titleClassName: '',
+  resetClassName: 'd-flex ml-auto',
+  resetText: 'Reset',
+};
+
+export default ChartTemplate;

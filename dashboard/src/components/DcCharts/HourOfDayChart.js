@@ -1,11 +1,12 @@
 import React from 'react';
 import * as dc from 'dc';
 import { scaleBand } from 'd3';
+import PropTypes from 'prop-types';
 
-import { ChartTemplate } from './ChartTemplate';
+import ChartTemplate from './ChartTemplate';
 
-const hourOfDayFunc = (divRef, data) => {
-  const hourOfDayChart = dc.barChart(divRef);
+const hourOfDayFunc = ({ div, data }) => {
+  const hourOfDayChart = dc.barChart(div);
   const dimension = data.dimension(
     d => d.hours.map(date => date.getHours()),
     true
@@ -28,6 +29,17 @@ const hourOfDayFunc = (divRef, data) => {
   return hourOfDayChart;
 };
 
-export const HourOfDayChart = () => (
-  <ChartTemplate chartFunction={hourOfDayFunc} title="Active Alerts by Hour" />
+const HourOfDayChart = ({ reduxHandler }) => (
+  <ChartTemplate
+    chartFunction={hourOfDayFunc}
+    chartName="HourOfDay"
+    title="Active Alerts by Hour"
+    reduxHandler={reduxHandler}
+  />
 );
+
+HourOfDayChart.propTypes = {
+  reduxHandler: PropTypes.func.isRequired,
+};
+
+export default HourOfDayChart;

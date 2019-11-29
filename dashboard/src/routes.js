@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 
 import DefaultLayout from './layouts';
 import WeeklyReport from './pages/WeeklyReport';
+import { DataProvider } from './components/DataContext';
 
 export default function Routes({ cities }) {
   return (
@@ -11,9 +12,11 @@ export default function Routes({ cities }) {
       <Redirect exact from="/" to="/miraflores" />
       {cities.map(city => (
         <Route key={city.id} path={city.path}>
-          <DefaultLayout>
-            <WeeklyReport city={city.name} />
-          </DefaultLayout>
+          <DataProvider>
+            <DefaultLayout>
+              <WeeklyReport city={city.name} />
+            </DefaultLayout>
+          </DataProvider>
         </Route>
       ))}
     </Switch>

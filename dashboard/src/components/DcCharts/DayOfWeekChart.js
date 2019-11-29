@@ -1,10 +1,11 @@
 import React from 'react';
 import * as dc from 'dc';
+import PropTypes from 'prop-types';
 
-import { ChartTemplate } from './ChartTemplate';
+import ChartTemplate from './ChartTemplate';
 
-const dayOfWeekFunc = (divRef, data) => {
-  const dayOfWeekChart = dc.rowChart(divRef);
+const dayOfWeekFunc = ({ div, data }) => {
+  const dayOfWeekChart = dc.rowChart(div);
 
   const dimension = data.dimension(d => {
     const startDay = d.startTime.getDay();
@@ -26,6 +27,16 @@ const dayOfWeekFunc = (divRef, data) => {
   return dayOfWeekChart;
 };
 
-export const DayOfWeekChart = () => (
-  <ChartTemplate chartFunction={dayOfWeekFunc} title="Weekday" />
+const DayOfWeekChart = ({ reduxHandler }) => (
+  <ChartTemplate
+    chartFunction={dayOfWeekFunc}
+    title="Weekday"
+    reduxHandler={reduxHandler}
+  />
 );
+
+DayOfWeekChart.propTypes = {
+  reduxHandler: PropTypes.func.isRequired,
+};
+
+export default DayOfWeekChart;
