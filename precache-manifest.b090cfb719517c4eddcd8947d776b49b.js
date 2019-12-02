@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "c507a85366f1d45498ae98599b1e676c",
+    "revision": "7997653f630f93ae5f13d75a97a4aadb",
     "url": "/cities-reports/index.html"
   },
   {
@@ -8,7 +8,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/cities-reports/static/css/2.a27340cf.chunk.css"
   },
   {
-    "revision": "ba2ff53b13c0fbf0d6d6",
+    "revision": "d6902323fb1cbba8766c",
     "url": "/cities-reports/static/css/main.780a9e14.chunk.css"
   },
   {
@@ -16,8 +16,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/cities-reports/static/js/2.82cab537.chunk.js"
   },
   {
-    "revision": "ba2ff53b13c0fbf0d6d6",
-    "url": "/cities-reports/static/js/main.6a84b9e2.chunk.js"
+    "revision": "d6902323fb1cbba8766c",
+    "url": "/cities-reports/static/js/main.09f4cfa3.chunk.js"
   },
   {
     "revision": "a98e0260a3c6093c9674",
