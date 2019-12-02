@@ -44,9 +44,24 @@ Routes.defaultProps = {
       name: 'Miraflores',
       url: `${baseUrl}/MirafloresAlerts.csv`,
     },
-    { id: 2, path: '/montevideo', name: 'Montevideo', url: `${baseUrl}/` },
-    { id: 3, path: '/quito', name: 'Quito', url: `${baseUrl}/` },
-    { id: 4, path: '/sao-paulo', name: 'São Paulo', url: `${baseUrl}/` },
-    { id: 5, path: '/xalapa', name: 'Xalapa', url: `${baseUrl}/` },
+    {
+      id: 2,
+      path: '/montevideo',
+      name: 'Montevideo',
+      url: `${baseUrl}/MontevideoAlerts.csv`,
+    },
+    { id: 3, path: '/quito', name: 'Quito', url: `${baseUrl}/QuitoAlerts.csv` },
+    {
+      id: 4,
+      path: '/sao-paulo',
+      name: 'São Paulo',
+      url: `${baseUrl}/SaoPauloAlerts.csv`,
+    },
+    {
+      id: 5,
+      path: '/xalapa',
+      name: 'Xalapa',
+      url: `${baseUrl}/XalapaAlerts.csv`,
+    },
   ],
 };
