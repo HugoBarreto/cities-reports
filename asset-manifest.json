@@ -1,0 +1,25 @@
+{
+  "files": {
+    "main.css": "/cities-reports/static/css/main.780a9e14.chunk.css",
+    "main.js": "/cities-reports/static/js/main.6a84b9e2.chunk.js",
+    "main.js.map": "/cities-reports/static/js/main.6a84b9e2.chunk.js.map",
+    "runtime-main.js": "/cities-reports/static/js/runtime-main.9f212820.js",
+    "runtime-main.js.map": "/cities-reports/static/js/runtime-main.9f212820.js.map",
+    "static/css/2.a27340cf.chunk.css": "/cities-reports/static/css/2.a27340cf.chunk.css",
+    "static/js/2.82cab537.chunk.js": "/cities-reports/static/js/2.82cab537.chunk.js",
+    "static/js/2.82cab537.chunk.js.map": "/cities-reports/static/js/2.82cab537.chunk.js.map",
+    "index.html": "/cities-reports/index.html",
+    "precache-manifest.6f699bd7bb35eea9e0233ebedc8ef039.js": "/cities-reports/precache-manifest.6f699bd7bb35eea9e0233ebedc8ef039.js",
+    "service-worker.js": "/cities-reports/service-worker.js",
+    "static/css/2.a27340cf.chunk.css.map": "/cities-reports/static/css/2.a27340cf.chunk.css.map",
+    "static/css/main.780a9e14.chunk.css.map": "/cities-reports/static/css/main.780a9e14.chunk.css.map",
+    "static/media/shards-dashboards-logo.svg": "/cities-reports/static/media/shards-dashboards-logo.60a85991.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.9f212820.js",
+    "static/css/2.a27340cf.chunk.css",
+    "static/js/2.82cab537.chunk.js",
+    "static/css/main.780a9e14.chunk.css",
+    "static/js/main.6a84b9e2.chunk.js"
+  ]
+}
