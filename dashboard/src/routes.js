@@ -6,13 +6,16 @@ import DefaultLayout from './layouts';
 import WeeklyReport from './pages/WeeklyReport';
 import { DataProvider } from './components/DataContext';
 
+const baseUrl =
+  'http://bd-fgv-public.s3.us-east-2.amazonaws.com/exports/IIEncontroRegional';
+
 export default function Routes({ cities }) {
   return (
     <Switch>
       <Redirect exact from="/" to="/miraflores" />
       {cities.map(city => (
         <Route key={city.id} path={city.path}>
-          <DataProvider>
+          <DataProvider url={city.url}>
             <DefaultLayout>
               <WeeklyReport city={city.name} />
             </DefaultLayout>
@@ -35,10 +38,15 @@ Routes.propTypes = {
 
 Routes.defaultProps = {
   cities: [
-    { id: 1, path: '/miraflores', name: 'Miraflores' },
-    { id: 2, path: '/montevideo', name: 'Montevideo' },
-    { id: 3, path: '/quito', name: 'Quito' },
-    { id: 4, path: '/sao-paulo', name: 'São Paulo' },
-    { id: 5, path: '/xalapa', name: 'Xalapa' },
+    {
+      id: 1,
+      path: '/miraflores',
+      name: 'Miraflores',
+      url: `${baseUrl}/MirafloresAlerts.csv`,
+    },
+    { id: 2, path: '/montevideo', name: 'Montevideo', url: `${baseUrl}/` },
+    { id: 3, path: '/quito', name: 'Quito', url: `${baseUrl}/` },
+    { id: 4, path: '/sao-paulo', name: 'São Paulo', url: `${baseUrl}/` },
+    { id: 5, path: '/xalapa', name: 'Xalapa', url: `${baseUrl}/` },
   ],
 };

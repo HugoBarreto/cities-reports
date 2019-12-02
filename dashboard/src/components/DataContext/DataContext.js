@@ -19,8 +19,9 @@ export class DataProvider extends Component {
       return;
     }
     this.setState({ loading: true });
+    const { url } = this.props;
     // Generalizar isso aqui
-    csv('./MirafloresAlerts.csv').then(data => {
+    csv(url).then(data => {
       // csv('./ndx.csv').then(data => {
       data.forEach(d => {
         const entry = d;
