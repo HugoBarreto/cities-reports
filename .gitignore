@@ -46,3 +46,8 @@ v0.2/
 **/lambdas/**/opt/
 .env
 **/weasyprint_for_awslambda/
+weasyprint_for_awslambda.zip
+/weekly/data/
+/weekly/notebooks/
+/dashboard/src/images/
+*.csv
