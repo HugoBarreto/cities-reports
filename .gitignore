@@ -45,3 +45,4 @@ v0.2/
 /weekly/data/output/
 **/lambdas/**/opt/
 .env
+**/weasyprint_for_awslambda/

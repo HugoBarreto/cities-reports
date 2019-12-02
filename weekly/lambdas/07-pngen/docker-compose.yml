@@ -1,0 +1,16 @@
+version: '3.4'
+
+services:
+  lambda:
+    build:
+      context: .
+    env_file:
+      - .env
+    environment:
+      # - PYTHONPATH=/var/task/src:/var/task/lib
+      # - PATH=/var/task/bin
+      - AWS_BUCKET_NAME=waze-reports
+    volumes:
+      - ./src/:/var/task/
+      - ./opt/:/opt/
+      - ./tmp/:/tmp/s3/
