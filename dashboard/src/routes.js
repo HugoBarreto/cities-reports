@@ -6,8 +6,7 @@ import DefaultLayout from './layouts';
 import WeeklyReport from './pages/WeeklyReport';
 import { DataProvider } from './components/DataContext';
 
-const baseUrl =
-  'http://bd-fgv-public.s3.us-east-2.amazonaws.com/exports/IIEncontroRegional';
+const baseUrl = 'https://hugo-data.s3.us-east-2.amazonaws.com';
 
 export default function Routes({ cities }) {
   return (

@@ -15,7 +15,7 @@ import store from './store';
 function App() {
   return (
     <Provider store={store}>
-      <BrowserRouter>
+      <BrowserRouter basename="/cities-reports">
         <Routes />
         <GlobalStyle />
       </BrowserRouter>

@@ -4,7 +4,7 @@ import KeplerGl from 'kepler.gl';
 import PropTypes from 'prop-types';
 import { Card, CardBody } from 'shards-react';
 
-const MAPBOX_TOKEN = process.env.MapboxAccessToken; // eslint-disable-line
+const MAPBOX_TOKEN = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN; // eslint-disable-line
 
 const KeplerMap = ({ id }) => {
   return (

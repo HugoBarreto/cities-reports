@@ -19,7 +19,7 @@ const lineAndBarChartsFunc = ({ div1, div2, data }) => {
     .group(alertsGroup, 'Total Alerts')
     .centerBar(true)
     .gap(1)
-    .x(scaleTime().domain([new Date(2019, 9, 26), new Date(2019, 10, 3)]))
+    .x(scaleTime().domain([new Date(2019, 11, 24), new Date(2019, 11, 30)]))
     .round(utcHour.round)
     .alwaysUseRounding(true)
     .xUnits(utcHour);
@@ -31,7 +31,7 @@ const lineAndBarChartsFunc = ({ div1, div2, data }) => {
     .mouseZoomable(false)
     .rangeChart(volumeChart)
     .transitionDuration(1000)
-    .x(scaleTime().domain([new Date(2019, 9, 26), new Date(2019, 10, 3)]))
+    .x(scaleTime().domain([new Date(2019, 11, 24), new Date(2019, 11, 30)]))
     .round(utcHour.round)
     .xUnits(utcHours)
     .elasticY(true)
