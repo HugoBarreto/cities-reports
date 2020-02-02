@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { scaleTime, utcHour, utcHours } from 'd3';
 
 import LinkedChartsTemplate from './LinkedChartsTemplate';
+import { getSundayBefore, getLastSunday } from '../../utils';
 
 const lineAndBarChartsFunc = ({ div1, div2, data }) => {
   const dimension = data.dimension(d => d.hours, true);
@@ -12,6 +13,11 @@ const lineAndBarChartsFunc = ({ div1, div2, data }) => {
 
   const volumeChart = dc.barChart(div1);
 
+  let lastSunday = getLastSunday();
+  const sundayBefore = getSundayBefore(lastSunday);
+
+  lastSunday = new Date(lastSunday.setUTCHours(0));
+
   volumeChart
     .height(80)
     .margins({ top: 0, right: 50, bottom: 20, left: 40 })
@@ -19,7 +25,7 @@ const lineAndBarChartsFunc = ({ div1, div2, data }) => {
     .group(alertsGroup, 'Total Alerts')
     .centerBar(true)
     .gap(1)
-    .x(scaleTime().domain([new Date(2019, 11, 24), new Date(2019, 11, 30)]))
+    .x(scaleTime().domain([sundayBefore, lastSunday]))
     .round(utcHour.round)
     .alwaysUseRounding(true)
     .xUnits(utcHour);
@@ -31,7 +37,7 @@ const lineAndBarChartsFunc = ({ div1, div2, data }) => {
     .mouseZoomable(false)
     .rangeChart(volumeChart)
     .transitionDuration(1000)
-    .x(scaleTime().domain([new Date(2019, 11, 24), new Date(2019, 11, 30)]))
+    .x(scaleTime().domain([sundayBefore, lastSunday]))
     .round(utcHour.round)
     .xUnits(utcHours)
     .elasticY(true)

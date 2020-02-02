@@ -39,15 +39,15 @@ export function last(array) {
 export function getLastSunday() {
   const d = new Date();
   d.setDate(d.getUTCDate() - d.getUTCDay());
-  d.setUTCHours(12);
+  d.setUTCHours(11);
   d.setMinutes(0);
   d.setSeconds(0);
   return d;
 }
 
 export function getSundayBefore(sunday) {
-  const d = sunday;
-  d.setDate(d.getUTCDate() - 7);
+  const d = new Date(sunday.getTime());
+  d.setUTCDate(d.getUTCDate() - 7);
   return d;
 }
 
