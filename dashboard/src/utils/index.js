@@ -35,3 +35,49 @@ export function parseAlertTypeSubtype(type, subtype) {
 export function last(array) {
   return array[array.length - 1];
 }
+
+export function getLastSunday() {
+  const d = new Date();
+  d.setDate(d.getUTCDate() - d.getUTCDay());
+  d.setUTCHours(12);
+  d.setMinutes(0);
+  d.setSeconds(0);
+  return d;
+}
+
+export function getSundayBefore(sunday) {
+  const d = sunday;
+  d.setDate(d.getUTCDate() - 7);
+  return d;
+}
+
+function parseNumberToPercentage(num) {
+  return Number(num).toLocaleString(undefined, {
+    style: 'percent',
+    minimumFractionDigits: 1,
+  });
+}
+
+export function getPercentage(currValue, oldValue) {
+  if (oldValue === 0) {
+    return parseNumberToPercentage(0);
+  }
+  return parseNumberToPercentage((currValue - oldValue) / oldValue);
+}
+
+export function getStatLabel(type) {
+  switch (type) {
+    case 'ACCIDENT':
+      return 'Accident';
+    case 'JAM':
+      return 'Jam';
+    case 'HAZARD_ON_ROAD_POT_HOLE':
+      return 'Pot Hole';
+    case 'HAZARD_WEATHER_FLOOD':
+      return 'Flood';
+    case 'HAZARD_ON_ROAD_TRAFFIC_LIGHT_FAULT':
+      return 'Traffic Light';
+    default:
+      return 'others';
+  }
+}

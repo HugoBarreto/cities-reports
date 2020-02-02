@@ -1,6 +1,4 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { addDataToMap, wrapTo } from 'kepler.gl/actions';
 import { redrawAll } from 'dc';
 import PropTypes from 'prop-types';
 import { Row, Col, Button } from 'shards-react';
@@ -9,12 +7,71 @@ import { DataContext } from '../DataContext';
 import SmallStat from './SmallStat';
 import dataTemplate from '../../data/kepler-data-template';
 import REDUX_ENUMS from '../../store/constants';
+import { getPercentage, getStatLabel } from '../../utils';
+
+function statsDataKey(type) {
+  switch (type) {
+    case 'ACCIDENT':
+      return 'accident';
+    case 'JAM':
+      return 'jam';
+    case 'HAZARD_ON_ROAD_POT_HOLE':
+      return 'potHole';
+    case 'HAZARD_WEATHER_FLOOD':
+      return 'flood';
+    case 'HAZARD_ON_ROAD_TRAFFIC_LIGHT_FAULT':
+      return 'trafficLight';
+    default:
+      return 'others';
+  }
+}
 
 const SmallStats = ({ smallStats, reduxHandler }) => {
   const [filters, setFilters] = useState([]);
   const [dimension, setDimension] = useState(null);
   const [alertTypes, setAlertTypes] = useState([]);
-  const { data } = useContext(DataContext);
+  const [statsData, setStatsData] = useState({});
+  const { data, aggWeeks } = useContext(DataContext);
+
+  useEffect(() => {
+    const dsets = {};
+    const sData = {};
+    if (Array.isArray(aggWeeks) && aggWeeks.length) {
+      aggWeeks.slice(-6).map(week => {
+        if (week.query === 'ALERTS') {
+          Object.keys(week.agg)
+            .filter(type => REDUX_ENUMS.ALLOWED_ALERT_TYPES.includes(type))
+            .map(type => {
+              if (type in dsets) {
+                dsets[type].push(week.agg[type]);
+              } else {
+                dsets[type] = [week.agg[type]];
+              }
+              return type;
+            });
+        }
+        return week;
+      });
+      Object.keys(dsets).map(type => {
+        const key = statsDataKey(type);
+        sData[key] = {};
+        sData[key].label = getStatLabel(type);
+        sData[key].datasets =
+          dsets[type].length < 6
+            ? new Array(6 - dsets[type].length).fill(0).concat(dsets[type])
+            : dsets[type];
+        [sData[key].value] = sData[key].datasets.slice(-1);
+        sData[key].percentage = getPercentage(
+          sData[key].datasets.slice(-1)[0],
+          sData[key].datasets.slice(-2)[0]
+        );
+        sData[key].increase =
+          sData[key].datasets.slice(-1)[0] >= sData[key].datasets.slice(-2)[0];
+        return type;
+      });
+    }
+    setStatsData(sData);
+  }, [aggWeeks]);
 
   // We want to define dimesion only once, then keep it
   useEffect(() => {
@@ -56,8 +113,11 @@ const SmallStats = ({ smallStats, reduxHandler }) => {
           .sort((a, b) => b.value - a.value)
           .map(({ key: alert, value }, idx) => {
             const stats = smallStats[idx];
-            stats.label = alert;
-            stats.value = value;
+            stats.label = statsData[alert].label;
+            stats.value = statsData[alert].value;
+            stats.datasets[0].data = statsData[alert].datasets;
+            stats.percentage = statsData[alert].percentage;
+            stats.increase = statsData[alert].increase;
             return (
               <Col className="col-lg mb-4" key={alert} {...stats.attrs}>
                 <SmallStat
@@ -69,7 +129,6 @@ const SmallStats = ({ smallStats, reduxHandler }) => {
                   value={stats.value}
                   percentage={stats.percentage}
                   increase={stats.increase}
-                  decrease={stats.decrease}
                 />
                 <Button
                   key={alert}
