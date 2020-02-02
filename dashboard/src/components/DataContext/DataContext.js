@@ -21,7 +21,7 @@ export class DataProvider extends Component {
     }
     this.setState({ loading: true });
     const { url, aggFile } = this.props;
-    const { data:aggWeeks } = await api.get(aggFile);
+    const { data: aggWeeks } = await api.get(aggFile);
     this.aggWeeks = aggWeeks.map(week => {
       week.date = new Date(week.date);
       return week;
@@ -54,7 +54,6 @@ export class DataProvider extends Component {
   }
 
   render() {
-    console.tron.log(this.agg);
     const { hasData } = this.state;
     const { children } = this.props;
 
@@ -62,7 +61,9 @@ export class DataProvider extends Component {
       return null;
     }
     return (
-      <DataContext.Provider value={{ data: this.data, aggWeeks: this.aggWeeks }}>
+      <DataContext.Provider
+        value={{ data: this.data, aggWeeks: this.aggWeeks }}
+      >
         <div ref={this.parent}>{children}</div>
       </DataContext.Provider>
     );
