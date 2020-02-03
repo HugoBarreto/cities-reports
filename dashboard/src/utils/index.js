@@ -38,10 +38,8 @@ export function last(array) {
 
 export function getLastSunday() {
   const d = new Date();
+  d.setUTCHours(11, 0, 0);
   d.setDate(d.getUTCDate() - d.getUTCDay());
-  d.setUTCHours(11);
-  d.setMinutes(0);
-  d.setSeconds(0);
   return d;
 }
 

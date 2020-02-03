@@ -5,18 +5,21 @@ import PropTypes from 'prop-types';
 import DefaultLayout from './layouts';
 import WeeklyReport from './pages/WeeklyReport';
 import { DataProvider } from './components/DataContext';
-import { getLastSunday, getSundayBefore} from './utils';
+import { getLastSunday, getSundayBefore } from './utils';
 
 const baseUrl = 'https://hugo-data.s3.us-east-2.amazonaws.com';
 
 export default function Routes({ cities }) {
-  var lastSunday = getLastSunday();
+  let lastSunday = getLastSunday();
 
-  if (new Date() < lastSunday){
+  if (new Date() < lastSunday) {
     lastSunday = getSundayBefore(lastSunday);
   }
 
-  const prefix = `${baseUrl}/${lastSunday.toJSON().slice(0,10).replace(/-/g,'/')}/`;
+  const prefix = `${baseUrl}/${lastSunday
+    .toJSON()
+    .slice(0, 10)
+    .replace(/-/g, '/')}/`;
 
   return (
     <Switch>
@@ -62,7 +65,13 @@ Routes.defaultProps = {
       fileName: 'Montevideo/ALERTS.csv',
       aggFile: 'MontevideoAgg.json',
     },
-    { id: 3, path: '/quito', name: 'Quito', fileName: 'Quito/ALERTS.csv', aggFile: 'QuitoAgg.json', },
+    {
+      id: 3,
+      path: '/quito',
+      name: 'Quito',
+      fileName: 'Quito/ALERTS.csv',
+      aggFile: 'QuitoAgg.json',
+    },
     {
       id: 4,
       path: '/sao-paulo',

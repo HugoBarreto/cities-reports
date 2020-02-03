@@ -13,10 +13,8 @@ const lineAndBarChartsFunc = ({ div1, div2, data }) => {
 
   const volumeChart = dc.barChart(div1);
 
-  let lastSunday = getLastSunday();
-  const sundayBefore = getSundayBefore(lastSunday);
-
-  lastSunday = new Date(lastSunday.setUTCHours(0));
+  const lastSunday = new Date(getLastSunday().setUTCHours(0));
+  const sundayBefore = getSundayBefore(getLastSunday());
 
   volumeChart
     .height(80)
